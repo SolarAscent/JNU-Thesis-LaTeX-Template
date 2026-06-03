@@ -1,0 +1,36 @@
+# LaTeX compilation artifacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.lof
+*.lot
+*.tdo
+*.thm
+
+# Backup files
+*~
+*.bak
+*.swp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Compiled output (optional - comment out to track PDF)
+# *.pdf
+
+# Python
+__pycache__/
+*.pyc
+
+# IDE
+.vscode/
+.idea/

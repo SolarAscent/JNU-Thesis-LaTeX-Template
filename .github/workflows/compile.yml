@@ -1,0 +1,75 @@
+name: Compile LaTeX Template
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        engine: [xelatex, lualatex]
+        fontset: [fandol]
+      fail-fast: false
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install TeX Live
+        uses: teatimeguest/setup-texlive-action@v3
+        with:
+          packages: |
+            scheme-full
+            fandol
+            ctex
+            biber
+            biblatex
+            biblatex-gb7714-2015
+
+      - name: Set engine flag
+        id: engine
+        run: |
+          if [ "${{ matrix.engine }}" = "xelatex" ]; then
+            echo "flag=-pdf -xelatex" >> $GITHUB_OUTPUT
+          else
+            echo "flag=-pdf -lualatex" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Compile thesis
+        run: |
+          latexmk -f ${{ steps.engine.outputs.flag }} jnuthesis
+        timeout-minutes: 10
+
+      - name: Check for overfull boxes
+        run: |
+          if grep -q "Overfull" jnuthesis.log; then
+            echo "::warning::Overfull boxes detected. Review jnuthesis.log for details."
+            grep "Overfull" jnuthesis.log || true
+          fi
+
+      - name: Check for undefined references
+        run: |
+          if grep -q "undefined" jnuthesis.log; then
+            echo "::warning::Undefined references detected."
+            grep "undefined" jnuthesis.log || true
+          fi
+
+      - name: Upload compiled PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: jnuthesis-${{ matrix.engine }}-${{ matrix.fontset }}
+          path: jnuthesis.pdf
+          if-no-files-found: error
+
+      - name: Check PDF exists
+        run: |
+          if [ ! -f jnuthesis.pdf ]; then
+            echo "::error::PDF not generated!"
+            exit 1
+          fi
+          echo "✅ PDF generated: $(ls -lh jnuthesis.pdf)"

@@ -1,0 +1,113 @@
+%%
+%% !TEX program = xelatex
+%%
+%% Jinan University (暨南大学) Undergraduate Thesis Template
+%% Version: 1.0, 2026/06/04
+%%
+%% Usage:
+%%   1. Fill in your metadata below (title, name, advisor, etc.)
+%%   2. Write your content in the Chapters/ folder
+%%   3. Run: latexmk -pdf jnuthesis
+%%
+%% Class options:
+%%   numbering=chinese   — 一、（一）、1、（1） (default)
+%%   numbering=arabic    — 1, 1.1, 1.1.1
+%%   fontset=mac         — macOS (pre-installed fonts)
+%%   fontset=windows     — Windows (pre-installed fonts)
+%%   fontset=ubuntu      — Ubuntu (need fonts-noto-cjk)
+%%   fontset=fandol      — Cross-platform fallback (bundled with TeX Live)
+%%   fontset=sourcehan   — Source Han fonts (install separately)
+%%   toc-depth=4         — Show subsubsection in TOC
+%%   draft               — Fast draft mode (no images)
+%%
+
+\documentclass[numbering=chinese,fontset=fandol]{jnuthesis}
+
+%% ============================================================================
+%%  Metadata — Fill in your information here
+%% ============================================================================
+
+\biaoti{在此处键入论文题目}
+\entitle{Type Your English Thesis Title Here}
+
+\xueyuan{XX学院}
+\xuexi{XX学系}
+\zhuanye{XX专业}
+
+\xingming{姓名}
+\xuehao{2024000000}
+\daoshi{指导教师姓名}
+
+\thesisdate{2026}{6}{4}
+
+%% ============================================================================
+%%  Bibliography
+%% ============================================================================
+
+\addbibresource{refs.bib}
+
+%% ============================================================================
+%%  Begin Document
+%% ============================================================================
+
+\begin{document}
+
+% ============================================
+%  FRONT MATTER
+% ============================================
+
+% --- Cover Page (封面) ---
+\makecover
+
+% --- Academic Honesty Statement (诚信声明) ---
+\makestatement
+
+% --- Chinese Abstract (中文摘要) ---
+\begin{zhabstract}
+
+编写摘要应注意：中文摘要应语言精炼、明确，扼要叙述毕业论文（设计）的主要内容，包括研究目的与意义、研究内容与方法以及研究结论等。一般不超过300字。
+
+本研究围绕[研究主题]展开，通过文献综述和实证分析，探讨了[研究问题]。研究采用[研究方法]，对[研究对象]进行了深入分析。研究结果表明，[主要发现]。本研究对于[研究意义]具有一定的理论价值和实践参考意义。
+
+\zhaiyao{关键词1；关键词2；关键词3；关键词4；关键词5}
+\end{zhabstract}
+
+% --- English Abstract ---
+\begin{enabstract}
+
+The English abstract should be consistent with the Chinese abstract, grammatically correct, and accurately reflect the content of the thesis.
+
+This study focuses on [research topic], exploring [research question] through literature review and empirical analysis. Using [research method], the study provides an in-depth analysis of [research object]. The results indicate that [main findings]. This research has theoretical value and practical significance for [research significance].
+
+\enkeywords{Keyword1; Keyword2; Keyword3; Keyword4; Keyword5}
+\end{enabstract}
+
+% --- Table of Contents (目录) ---
+\tableofcontents
+
+% ============================================
+%  MAIN MATTER
+% ============================================
+
+\input{Chapters/01-Introduction}
+\input{Chapters/02-Chapter}
+\input{Chapters/03-Methodology}
+\input{Chapters/04-Experiments}
+\input{Chapters/05-Conclusion}
+
+% ============================================
+%  BACK MATTER
+% ============================================
+
+% --- References (参考文献) ---
+\printbibliography[title={参考文献}]
+
+% --- Appendices (附录) ---
+\appendix
+\input{Chapters/Appendix-A}
+\input{Chapters/Appendix-B}
+
+% --- Acknowledgments (致谢) ---
+\input{Chapters/Acknowledgments}
+
+\end{document}
