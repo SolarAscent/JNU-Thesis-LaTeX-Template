@@ -200,15 +200,12 @@
 
 \RequirePackage{hyperref}
 \hypersetup{
-  colorlinks=true,
-  linkcolor=black,
-  citecolor=blue,
-  filecolor=blue,
-  urlcolor=black,
+  hidelinks,
   bookmarksnumbered=true,
   bookmarksopen=true,
   pdfstartview=FitH,
   unicode=true,
+  breaklinks=true,
 }
 
 \RequirePackage[
@@ -258,6 +255,14 @@
 % Ensure body starts at 四号 (14pt) 宋体
 \AtBeginDocument{\zihao{4}\songti\setstretch{1}}
 
+% Keep displayed equations close to the surrounding body text.
+\AtBeginDocument{%
+  \setlength{\abovedisplayskip}{4pt plus 1pt minus 2pt}%
+  \setlength{\belowdisplayskip}{4pt plus 1pt minus 2pt}%
+  \setlength{\abovedisplayshortskip}{2pt plus 1pt minus 1pt}%
+  \setlength{\belowdisplayshortskip}{2pt plus 1pt minus 1pt}%
+}
+
 %% ============================================================================
 %%  Paragraph spacing
 %% ============================================================================
@@ -265,15 +270,28 @@
 \setlength{\parindent}{2em}
 \setlength{\parskip}{0pt plus 0pt minus 0pt}
 
+% Compact list spacing follows the older JNU templates while preserving
+% local overrides such as publication lists with [1], [2], ...
+\setlist{nosep}
+\setlist[enumerate,1]{label={（\arabic*）},left=2em,labelsep=0.5em}
+\setlist[itemize]{left=2em,labelsep=0.5em}
+
 %% ============================================================================
 %%  Page styles (headers and footers)
 %% ============================================================================
 
 \fancypagestyle{jnu-main}{%
   \fancyhf{}%
-  \fancyhead[C]{\sizeheader\songti 暨南大学本科毕业论文（设计）}%
+  \fancyhead[C]{\sizeheader\songti \@biaoti}%
   \fancyfoot[C]{\sizetocsec\thepage}%
   \renewcommand{\headrulewidth}{0.4pt}%
+}
+
+\fancypagestyle{jnu-front}{%
+  \fancyhf{}%
+  \fancyhead[C]{\sizeheader\songti 暨南大学本科毕业论文（设计）}%
+  \renewcommand{\headrulewidth}{0.4pt}%
+  \renewcommand{\footrulewidth}{0pt}%
 }
 
 \fancypagestyle{jnu-plain}{%
@@ -351,6 +369,7 @@
 %%  Table of Contents
 %% ============================================================================
 
+\setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{\ifjnu@toc@deep 3\else 2\fi}
 
 \titlecontents{chapter}
@@ -390,17 +409,22 @@
 %%  Captions (table/figure)
 %% ============================================================================
 
+\DeclareCaptionFont{jnucaption}{\sizecaption\songti}
 \captionsetup{
-  font={small},
-  labelfont={bf},
-  labelsep=quad,
+  font=jnucaption,
+  labelfont=jnucaption,
+  labelsep=space,
   justification=centering,
   format=plain,
+  skip=6pt,
 }
 
 \numberwithin{figure}{chapter}
 \numberwithin{table}{chapter}
 \numberwithin{equation}{chapter}
+\renewcommand{\thefigure}{\arabic{chapter}-\arabic{figure}}
+\renewcommand{\thetable}{\arabic{chapter}-\arabic{table}}
+\renewcommand{\theequation}{\arabic{chapter}-\arabic{equation}}
 
 \ctexset{
   figurename = {图},
@@ -488,27 +512,27 @@
 %% ============================================================================
 
 \newcommand{\makestatement}{%
-  \thispagestyle{jnu-empty}
-  \vspace*{-4mm}
+  \thispagestyle{jnu-front}
+  \vspace*{20mm}
   \begin{center}
-    {\sizestatement\songti\bfseries 诚信声明}
+    {\sizestatement\songti\bfseries 诚\hspace{1em}信\hspace{1em}声\hspace{1em}明}
   \end{center}
-  \vspace{10mm}
+  \vspace{25mm}
   \par
-  {\sizefront\songti
+  {\sizefront\songti\setstretch{1.65}
     我声明，所呈交的毕业论文（设计）是本人在老师指导下进行的研究工作及取得的
     研究成果。除文中已经注明引用的内容外，本论文（设计）不包含任何其他个人或
     集体已经发表或撰写过的作品成果。在论文（设计）撰写过程中，本人严格遵守学
     术道德和学术规范，恪守学术诚信，坚决杜绝任何形式的抄袭、剽窃、伪造、篡改、
     买卖、代写毕业论文等学术不端行为，本人自愿承担因违反上述承诺而产生的后果和责任。
   }
-  \vspace{18mm}
+  \vspace{45mm}
   \par
   {\sizefront\songti
     签名：\hspace{38mm}
     日期：\hspace{1.2em}年\hspace{1.2em}月\hspace{1.2em}日
   }
-  \vspace{15mm}
+  \clearpage
 }
 
 %% ============================================================================
@@ -516,17 +540,20 @@
 %% ============================================================================
 
 \newenvironment{zhabstract}{%
-  \thispagestyle{jnu-empty}
+  \thispagestyle{jnu-front}
+  \vspace*{8mm}
   \begin{center}
-    {\sizetitle\songti\bfseries \@biaoti}
+    {\sizetitle\songti\bfseries [\@biaoti]}
   \end{center}
-  \vspace{8mm}
+  \vspace{18mm}
   \par
   \sizebody\songti
   \setlength{\parindent}{2em}
+  \setstretch{1.65}
   \noindent{\songti\bfseries [摘\hspace{1em}要]}\hspace{0.5em}
 }{%
   \par
+  \clearpage
 }
 
 \newcommand{\zhaiyao}[1]{%
@@ -540,18 +567,21 @@
 %% ============================================================================
 
 \newenvironment{enabstract}{%
-  \clearpage
-  \thispagestyle{jnu-empty}
+  \thispagestyle{jnu-front}
+  \vspace*{8mm}
   \begin{center}
-    {\sizetitle\bfseries \@entitle}
+    {\sizetitle\bfseries [\@entitle]}
   \end{center}
-  \vspace{8mm}
+  \vspace{18mm}
   \par
   \sizebody
+  \songti
+  \setstretch{1.65}
   \setlength{\parindent}{2em}
   \noindent{\bfseries Abstract:}\hspace{0.5em}
 }{%
   \par
+  \clearpage
 }
 
 \newcommand{\enkeywords}[1]{%

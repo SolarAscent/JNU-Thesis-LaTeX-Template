@@ -190,4 +190,4 @@ Pandoc cannot fully preserve complex LaTeX macros, cover layout, or bibliography
 
 ## Credits
 
-Thanks to Jinan University's 2026 official Word thesis templates, the original `jnuthesis`, and the legacy SolarAscent/JNUThesisTemplate project. This repository continues the work by collecting, calibrating, and maintaining a current undergraduate thesis template.
+Thanks to Jinan University's 2026 official Word thesis templates, the original `jnuthesis`, [Latiyas/JNUThesis](https://github.com/Latiyas/JNUThesis), and the legacy [SolarAscent/JNUThesisTemplate](https://github.com/SolarAscent/JNUThesisTemplate). This project borrows their engineering lessons for Chinese fonts, table of contents, captions, lists, and build configuration, while using the 2026 official Word templates as the formatting baseline.

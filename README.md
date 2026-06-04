@@ -190,4 +190,4 @@ pandoc jnuthesis.tex -o thesis.docx \
 
 ## 致谢
 
-感谢暨南大学 2026 版官方 Word 毕业论文模板，以及旧版 `jnuthesis` 和 SolarAscent/JNUThesisTemplate 项目的早期工作。本项目在这些基础上继续整理、校准和维护。
+感谢暨南大学 2026 版官方 Word 毕业论文模板，以及旧版 `jnuthesis`、[Latiyas/JNUThesis](https://github.com/Latiyas/JNUThesis) 和 [SolarAscent/JNUThesisTemplate](https://github.com/SolarAscent/JNUThesisTemplate) 的早期工作。本项目参考了这些模板在中文字体、目录、题注、列表和编译配置上的经验，同时以新版官方 Word 模板作为格式校准基准。
