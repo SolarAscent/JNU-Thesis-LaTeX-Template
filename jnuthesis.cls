@@ -575,9 +575,8 @@
   \vspace{18mm}
   \par
   \sizebody
-  \songti
-  \setstretch{1.65}
   \setlength{\parindent}{2em}
+  \setstretch{1.65}
   \noindent{\bfseries Abstract:}\hspace{0.5em}
 }{%
   \par
@@ -623,14 +622,58 @@
 }
 
 %% ============================================================================
-%%  Math utilities
+%%  Math utilities (from SolarAscent/JNUThesisTemplate)
 %% ============================================================================
 
-\DeclareMathOperator{\Corr}{Corr}
+% --- Math operators ---
+\DeclareMathOperator{\Corr}{\rho}
 \DeclareMathOperator{\Cov}{Cov}
 \DeclareMathOperator{\Var}{Var}
 \DeclareMathOperator{\grad}{grad}
+\DeclareMathOperator{\Prj}{Prj}
+
+% --- Upright differential d ---
 \newcommand{\diff}{\mathop{}\!\mathrm{d}}
+\newcommand{\dx}{\diff x}
+\newcommand{\dy}{\diff y}
+\newcommand{\du}{\diff u}
+\newcommand{\dv}{\diff v}
+\newcommand{\dr}{\diff r}
+\newcommand{\ds}{\diff s}
+\newcommand{\dt}{\diff t}
+\newcommand{\dS}{\diff S}
+
+% --- Smart \d: math mode = differential, text mode = underdot ---
+\AtBeginDocument{%
+  \let\oldd=\d
+  \renewrobustcmd{\d}{\ifbool{mmode}{\diff}{\oldd}}%
+}
+
+% --- Mathematical constants ---
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\im}{\mathrm{i}}
+\newcommand{\R}{\mathbb{R}}
+
+% --- Vector shortcuts (with \vphantom for consistent arrow height) ---
+\newcommand{\va}{\vec{a\vphantom{b}}}
+\newcommand{\vb}{\vec{b}}
+\newcommand{\vc}{\vec{c\vphantom{b}}}
+\newcommand{\vv}{\vec{v\vphantom{b}}}
+
+% --- Limits and integrals ---
+\newcommand{\limit}{\lim\limits}
+\let\ov=\overrightarrow
+
+% --- Transpose ---
+\def\T{\mathrm{T}\kern-.5pt}
+
+% --- Wide fraction (extra horizontal padding) ---
+\newrobustcmd{\wfrac}[3][2pt]{%
+  {\begingroup\hspace{#1}#2\hspace{#1}\endgroup\over\hspace{#1}#3\hspace{#1}}%
+}
+
+% --- Absorb stray paragraph breaks (from SolarAscent) ---
+\newcommand\ignorepars{\@ifnextchar\par{\expandafter\ignorepars\@gobble}{}}
 
 %% ============================================================================
 %%  Local config
