@@ -193,13 +193,13 @@
 \newcommand{\sizestatement}{\fontsize{22pt}{28pt}\selectfont}  % 二号
 \newcommand{\sizetitle}{\fontsize{18pt}{24pt}\selectfont}      % 小二号
 \newcommand{\sizechap}{\fontsize{15pt}{22pt}\selectfont}       % 小三号
-\newcommand{\sizebody}{\fontsize{14pt}{21pt}\selectfont}       % 四号
+\newcommand{\sizebody}{\fontsize{14pt}{22pt}\selectfont}       % 四号
 \newcommand{\sizetocsec}{\fontsize{12pt}{18pt}\selectfont}     % 小四号
 \newcommand{\sizecaption}{\fontsize{10.5pt}{15pt}\selectfont}  % 五号
 \newcommand{\sizeheader}{\fontsize{9pt}{12pt}\selectfont}      % 小五号
 
 % Ensure body starts at 四号 (14pt) 宋体
-\AtBeginDocument{\zihao{4}\songti\setstretch{1.0}}
+\AtBeginDocument{\zihao{4}\songti\setstretch{1.15}}
 
 %% ============================================================================
 %%  Paragraph spacing
@@ -379,49 +379,58 @@
   \thispagestyle{jnu-empty}
   \begin{titlepage}
     \centering
-    \vspace*{1.5cm}
 
-    % University logo
+    % University name in calligraphy (TOP — matches Word cover)
+    \IfFileExists{figs/jnu-name.png}{%
+      \includegraphics[width=7cm]{figs/jnu-name.png}
+    }{}
+
+    \vspace{1cm}
+
+    % University logo (BELOW the name)
     \IfFileExists{figs/jnu-logo.png}{%
-      \includegraphics[height=3.5cm]{figs/jnu-logo.png}
+      \includegraphics[height=3cm]{figs/jnu-logo.png}
     }{%
-      \fbox{\parbox{3.5cm}{\centering\vspace{1.5cm}校徽\\logo\vspace{1.5cm}}}
+      \fbox{\parbox{3cm}{\centering\vspace{1.5cm}校徽\\logo\vspace{1.5cm}}}
     }
 
     \vspace{1.5cm}
 
-    % "本科生毕业论文" — SimHei, 小初号(36pt)
+    % "本科生毕业论文" — 小初号(36pt) 黑体
     {\sizecover\heiti 本科生毕业论文}
 
-    \vspace{3cm}
+    \vspace{2.5cm}
 
-    % Title field
+    % Thesis title field
     \begin{flushleft}
-      \hspace{2em}%
+      \hspace{1.5em}%
       {\sizetitle\songti\bfseries 论文题目}%
       \hspace{0.5em}%
-      {\sizetitle\songti\CJKunderline{\makebox[5.5cm]{\hfill\@biaoti\hfill}}}
+      {\sizetitle\songti\CJKunderline{\makebox[0.55\textwidth]{\hfill\@biaoti\hfill}}}
     \end{flushleft}
 
-    \vspace{1cm}
+    \vspace{0.8cm}
 
-    % Info fields
+    % Info fields — two-column layout matching Word cover
     \begin{flushleft}
       \sizebody\songti\bfseries
-      \renewcommand{\arraystretch}{2.0}
-      \begin{tabular}{@{}p{2.2cm}p{5cm}p{2.2cm}p{5cm}@{}}
+      \renewcommand{\arraystretch}{2.2}
+      \begin{tabular}{@{}p{2.5cm}p{0.45\textwidth}p{2.5cm}p{0.35\textwidth}@{}}
         学\hfill 院 &
-        \CJKunderline{\makebox[5cm]{\hfill\@xueyuan\hfill}} &
+        \CJKunderline{\makebox[0.42\textwidth]{\hfill\@xueyuan\hfill}} &
         学\hfill 系 &
-        \CJKunderline{\makebox[5cm]{\hfill\@xuexi\hfill}} \\
+        \CJKunderline{\makebox[0.32\textwidth]{\hfill\@xuexi\hfill}} \\
+        \\[-0.3cm]
         专\hfill 业 &
-        \CJKunderline{\makebox[5cm]{\hfill\@zhuanye\hfill}} & & \\
+        \CJKunderline{\makebox[0.42\textwidth]{\hfill\@zhuanye\hfill}} & & \\
+        \\[-0.3cm]
         姓\hfill 名 &
-        \CJKunderline{\makebox[5cm]{\hfill\@xingming\hfill}} &
+        \CJKunderline{\makebox[0.42\textwidth]{\hfill\@xingming\hfill}} &
         学\hfill 号 &
-        \CJKunderline{\makebox[5cm]{\hfill\@xuehao\hfill}} \\
+        \CJKunderline{\makebox[0.32\textwidth]{\hfill\@xuehao\hfill}} \\
+        \\[-0.3cm]
         指导教师 &
-        \CJKunderline{\makebox[5cm]{\hfill\@daoshi\hfill}} & & \\
+        \CJKunderline{\makebox[0.42\textwidth]{\hfill\@daoshi\hfill}} & & \\
       \end{tabular}
     \end{flushleft}
 
@@ -435,12 +444,9 @@
 
     \vfill
 
-    % University name calligraphy at bottom
-    \IfFileExists{figs/jnu-name.png}{%
-      \includegraphics[width=5cm]{figs/jnu-name.png}
-    }{}
+    {\sizebody JINAN UNIVERSITY}
 
-    \vspace{0.5cm}
+    \vspace{0.3cm}
   \end{titlepage}
   \clearpage
 }
@@ -453,7 +459,7 @@
   \thispagestyle{jnu-empty}
   \vspace*{2cm}
   \begin{center}
-    {\sizestatement\songti\bfseries 诚\hspace{2em}信\hspace{2em}声\hspace{2em}明}
+    {\sizestatement\songti\bfseries 诚信声明}
   \end{center}
   \vspace{2cm}
   \par
