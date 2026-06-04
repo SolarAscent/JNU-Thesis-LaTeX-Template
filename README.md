@@ -24,7 +24,7 @@
 
 ```bash
 # 1. Clone this repository
-git clone https://github.com/YOUR_USERNAME/JNUThesisTemplate.git
+git clone https://github.com/SolarAscent/JNU-Thesis-LaTeX-Template.git
 cd JNUThesisTemplate
 
 # 2. Edit your metadata in jnuthesis.tex
@@ -224,8 +224,8 @@ This template is licensed under the [GNU General Public License v3.0](LICENSE).
 ### 🙏 Credits
 
 - Original LaTeX template (2018) by **Jianrui Lyu** (lvjr@163.com) — [lvjr.bitbucket.io/jnuthesis.html](https://lvjr.bitbucket.io/jnuthesis.html)
-- Updated by **SolarAscent** (2023) — [github.com/SolarAscent/JNUThesisTemplate](https://github.com/SolarAscent/JNUThesisTemplate)
-- Rewritten for 2026 Word template specifications by **JNU Thesis Template Contributors**
+- Legacy template maintained by **SolarAscent** (2023) — [github.com/SolarAscent/JNUThesisTemplate](https://github.com/SolarAscent/JNUThesisTemplate) *(superseded by this template)*
+- This v1.0 template: rewritten from scratch based on the 2026 official JNU Word thesis template, with significant architectural improvements including biblatex/GB7714 support, build automation, cross-platform font configuration, and CI/CD
 
 ---
 
@@ -235,7 +235,7 @@ This template is licensed under the [GNU General Public License v3.0](LICENSE).
 
 ```bash
 # 1. 克隆本仓库
-git clone https://github.com/YOUR_USERNAME/JNUThesisTemplate.git
+git clone https://github.com/SolarAscent/JNU-Thesis-LaTeX-Template.git
 cd JNUThesisTemplate
 
 # 2. 在 jnuthesis.tex 中填写你的信息
@@ -458,8 +458,8 @@ pandoc jnuthesis.tex -o thesis.docx \
 ### 🙏 致谢
 
 - 原始 LaTeX 模板 (2018) 由 **吕荐瑞** 老师制作 — [lvjr.bitbucket.io/jnuthesis.html](https://lvjr.bitbucket.io/jnuthesis.html)
-- **SolarAscent** (2023) 更新维护 — [github.com/SolarAscent/JNUThesisTemplate](https://github.com/SolarAscent/JNUThesisTemplate)
-- 2026版根据学校最新Word模板重新开发
+- 旧版模板由 **SolarAscent** (2023) 维护 — [github.com/SolarAscent/JNUThesisTemplate](https://github.com/SolarAscent/JNUThesisTemplate) *（已由本模板取代）*
+- 本 v1.0 模板：基于2026版暨南大学官方Word毕业论文模板从零重新开发，在架构上进行了重大改进，包括 biblatex/GB7714 支持、自动化构建、跨平台字体配置和 CI/CD
 
 ---
 
