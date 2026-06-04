@@ -28,6 +28,7 @@ Thumbs.db
 
 # Compiled output (optional - comment out to track PDF)
 # *.pdf
+/jnuthesis.pdf
 build/
 .codex-analysis/
 
