@@ -1,146 +1,116 @@
 %%
-%% This is file `jnuthesis.cls',
-%% generated for Jinan University (暨南大学) Undergraduate Thesis.
+%% jnuthesis.cls — Jinan University (暨南大学) Undergraduate Thesis
+%% Version 1.0, 2026/06/04
 %%
-%% Copyright (C) 2026 by JNU Thesis Template Contributors
+%% Based on official JNU Word thesis template (2026 edition).
+%% https://github.com/SolarAscent/JNU-Thesis-LaTeX-Template
 %%
-%% This file may be distributed and/or modified under the conditions of
-%% the GNU General Public License, version 3.
-%%
-%% Repository: https://github.com/SolarAscent/JNUThesisTemplate
-%%
-%% Based on the official JNU Word thesis template (2026).
-%% Original LaTeX template by Jianrui Lyu (lvjr@163.com), 2018.
-%% Rewritten and updated for the 2026 Word template specifications.
+%% Original LaTeX template: Jianrui Lyu (lvjr@163.com), 2018.
+%% Legacy: SolarAscent/JNUThesisTemplate (2023).
 %%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{jnuthesis}[2026/06/04 v1.0 Jinan University Undergraduate Thesis Template]
+\ProvidesClass{jnuthesis}[2026/06/04 v1.0 JNU Undergraduate Thesis]
 
 %% ============================================================================
-%%  Class Options — must be declared BEFORE \ProcessOptions
+%%  Options (all \DeclareOption BEFORE \ProcessOptions)
 %% ============================================================================
 
-% --- numbering scheme ---
-\newif\ifjnu@numbering@chinese
-\jnu@numbering@chinesetrue
-\DeclareOption{numbering=chinese}{\jnu@numbering@chinesetrue}
-\DeclareOption{numbering=arabic}{\jnu@numbering@chinesefalse}
+% --- heading numbering scheme ---
+\newif\ifjnu@num@chinese
+\jnu@num@chinesefalse  % default: arabic (matches Word template TOC)
+\DeclareOption{numbering=chinese}{\jnu@num@chinesetrue}
+\DeclareOption{numbering=arabic}{\jnu@num@chinesefalse}
 
 % --- toc depth ---
-\newif\ifjnu@toc@four
-\jnu@toc@fourfalse
-\DeclareOption{toc-depth=4}{\jnu@toc@fourtrue}
+\newif\ifjnu@toc@deep
+\jnu@toc@deepfalse
+\DeclareOption{toc-depth=4}{\jnu@toc@deeptrue}
 
-% --- draft mode ---
-\newif\ifjnu@draft
-\jnu@draftfalse
-\DeclareOption{draft}{\jnu@drafttrue}
-
-% --- fontset options ---
-\newif\ifjnu@fontset@set
-\jnu@fontset@setfalse
-
+% --- fontset: store choice, apply after LoadClass ---
 \def\jnu@fontset@load{%
-  % Default fallback: fandol (bundled with TeX Live)
-  \setCJKmainfont{FandolSong-Regular.otf}[
-    BoldFont=FandolHei-Regular.otf,
-    ItalicFont=FandolKai-Regular.otf,
-  ]
-  \setCJKsansfont{FandolHei-Regular.otf}[AutoFakeBold=2.0]
-  \setCJKmonofont{FandolFang-Regular.otf}
-  \setCJKfamilyfont{zhsong}{FandolSong-Regular.otf}[
-    BoldFont=FandolHei-Regular.otf,
-    ItalicFont=FandolKai-Regular.otf,
-  ]
-  \setCJKfamilyfont{zhhei}{FandolHei-Regular.otf}[AutoFakeBold=2.0]
-  \setCJKfamilyfont{zhkai}{FandolKai-Regular.otf}
-  \setCJKfamilyfont{zhfs}{FandolFang-Regular.otf}
+  % Default: fandol (bundled with TeX Live, cross-platform)
+  \setCJKmainfont{FandolSong-Regular.otf}%
+  \setCJKsansfont{FandolHei-Regular.otf}[AutoFakeBold=2.5]%
+  \setCJKmonofont{FandolFang-Regular.otf}%
+  \setCJKfamilyfont{zhsong}{FandolSong-Regular.otf}%
+  \setCJKfamilyfont{zhhei}{FandolHei-Regular.otf}[AutoFakeBold=2.5]%
+  \setCJKfamilyfont{zhkai}{FandolKai-Regular.otf}%
+  \setCJKfamilyfont{zhfs}{FandolFang-Regular.otf}%
 }
 
 \DeclareOption{fontset=fandol}{%
-  \jnu@fontset@settrue
   \def\jnu@fontset@load{%
-    \setCJKmainfont{FandolSong-Regular.otf}[
-      BoldFont=FandolHei-Regular.otf,
-      ItalicFont=FandolKai-Regular.otf,
-    ]
-    \setCJKsansfont{FandolHei-Regular.otf}[AutoFakeBold=2.0]
-    \setCJKmonofont{FandolFang-Regular.otf}
-    \setCJKfamilyfont{zhsong}{FandolSong-Regular.otf}[
-      BoldFont=FandolHei-Regular.otf,
-      ItalicFont=FandolKai-Regular.otf,
-    ]
-    \setCJKfamilyfont{zhhei}{FandolHei-Regular.otf}[AutoFakeBold=2.0]
-    \setCJKfamilyfont{zhkai}{FandolKai-Regular.otf}
-    \setCJKfamilyfont{zhfs}{FandolFang-Regular.otf}
-  }
+    \setCJKmainfont{FandolSong-Regular.otf}[AutoFakeBold=2.5]%
+    \setCJKsansfont{FandolHei-Regular.otf}[AutoFakeBold=2.5]%
+    \setCJKmonofont{FandolFang-Regular.otf}%
+    \setCJKfamilyfont{zhsong}{FandolSong-Regular.otf}[AutoFakeBold=2.5]%
+    \setCJKfamilyfont{zhhei}{FandolHei-Regular.otf}[AutoFakeBold=2.5]%
+    \setCJKfamilyfont{zhkai}{FandolKai-Regular.otf}%
+    \setCJKfamilyfont{zhfs}{FandolFang-Regular.otf}%
+  }%
 }
 
 \DeclareOption{fontset=windows}{%
-  \jnu@fontset@settrue
   \def\jnu@fontset@load{%
-    \setCJKmainfont{SimSun}[AutoFakeBold=2.5]
-    \setCJKsansfont{SimHei}
-    \setCJKmonofont{FangSong}
-    \setCJKfamilyfont{zhsong}{SimSun}[AutoFakeBold=2.5]
-    \setCJKfamilyfont{zhhei}{SimHei}
-    \setCJKfamilyfont{zhkai}{KaiTi}
-    \setCJKfamilyfont{zhfs}{FangSong}
-  }
+    \setCJKmainfont{SimSun}[AutoFakeBold=2.5]%
+    \setCJKsansfont{SimHei}%
+    \setCJKmonofont{FangSong}%
+    \setCJKfamilyfont{zhsong}{SimSun}[AutoFakeBold=2.5]%
+    \setCJKfamilyfont{zhhei}{SimHei}%
+    \setCJKfamilyfont{zhkai}{KaiTi}%
+    \setCJKfamilyfont{zhfs}{FangSong}%
+  }%
 }
 
 \DeclareOption{fontset=mac}{%
-  \jnu@fontset@settrue
   \def\jnu@fontset@load{%
-    \setCJKmainfont{Songti SC}[BoldFont=Heiti SC]
-    \setCJKsansfont{Heiti SC}
-    \setCJKmonofont{STFangsong}
-    \setCJKfamilyfont{zhsong}{Songti SC}[BoldFont=Heiti SC]
-    \setCJKfamilyfont{zhhei}{Heiti SC}
-    \setCJKfamilyfont{zhkai}{Kaiti SC}
-    \setCJKfamilyfont{zhfs}{STFangsong}
-  }
+    \setCJKmainfont{Songti SC}[BoldFont=Heiti SC]%
+    \setCJKsansfont{Heiti SC}%
+    \setCJKmonofont{STFangsong}%
+    \setCJKfamilyfont{zhsong}{Songti SC}[BoldFont=Heiti SC]%
+    \setCJKfamilyfont{zhhei}{Heiti SC}%
+    \setCJKfamilyfont{zhkai}{Kaiti SC}%
+    \setCJKfamilyfont{zhfs}{STFangsong}%
+  }%
 }
 
 \DeclareOption{fontset=ubuntu}{%
-  \jnu@fontset@settrue
   \def\jnu@fontset@load{%
-    \setCJKmainfont{Noto Serif CJK SC}[BoldFont=Noto Sans CJK SC]
-    \setCJKsansfont{Noto Sans CJK SC}
-    \setCJKmonofont{Noto Sans CJK SC}
-    \setCJKfamilyfont{zhsong}{Noto Serif CJK SC}[BoldFont=Noto Sans CJK SC]
-    \setCJKfamilyfont{zhhei}{Noto Sans CJK SC}
-    \setCJKfamilyfont{zhkai}{Noto Serif CJK SC}
-    \setCJKfamilyfont{zhfs}{Noto Serif CJK SC}
-  }
+    \setCJKmainfont{Noto Serif CJK SC}[BoldFont=Noto Sans CJK SC]%
+    \setCJKsansfont{Noto Sans CJK SC}%
+    \setCJKmonofont{Noto Sans CJK SC}%
+    \setCJKfamilyfont{zhsong}{Noto Serif CJK SC}[BoldFont=Noto Sans CJK SC]%
+    \setCJKfamilyfont{zhhei}{Noto Sans CJK SC}%
+    \setCJKfamilyfont{zhkai}{Noto Serif CJK SC}%
+    \setCJKfamilyfont{zhfs}{Noto Serif CJK SC}%
+  }%
 }
 
 \DeclareOption{fontset=sourcehan}{%
-  \jnu@fontset@settrue
   \def\jnu@fontset@load{%
-    \setCJKmainfont{Source Han Serif SC}[BoldFont=Source Han Sans SC]
-    \setCJKsansfont{Source Han Sans SC}
-    \setCJKmonofont{Source Han Sans SC}
-    \setCJKfamilyfont{zhsong}{Source Han Serif SC}[BoldFont=Source Han Sans SC]
-    \setCJKfamilyfont{zhhei}{Source Han Sans SC}
-    \setCJKfamilyfont{zhkai}{Source Han Serif SC}
-    \setCJKfamilyfont{zhfs}{Source Han Serif SC}
-  }
+    \setCJKmainfont{Source Han Serif SC}[BoldFont=Source Han Sans SC]%
+    \setCJKsansfont{Source Han Sans SC}%
+    \setCJKmonofont{Source Han Sans SC}%
+    \setCJKfamilyfont{zhsong}{Source Han Serif SC}[BoldFont=Source Han Sans SC]%
+    \setCJKfamilyfont{zhhei}{Source Han Sans SC}%
+    \setCJKfamilyfont{zhkai}{Source Han Serif SC}%
+    \setCJKfamilyfont{zhfs}{Source Han Serif SC}%
+  }%
 }
 
-% --- Pass all remaining options to ctexbook ---
+% Pass unknown options to ctexbook
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 \ProcessOptions\relax
 
 %% ============================================================================
-%%  Load Base Class
+%%  Base class: ctexbook handles Chinese typesetting
 %% ============================================================================
 
-\LoadClass[scheme=chinese,fontset=none,zihao=4,openany]{ctexbook}
+\LoadClass[scheme=chinese,fontset=none,cs4size,openany,heading=true]{ctexbook}
 
 %% ============================================================================
-%%  Required Packages
+%%  Packages
 %% ============================================================================
 
 \RequirePackage{geometry}
@@ -150,28 +120,27 @@
   right=31.75mm,
   top=25.4mm,
   bottom=25.4mm,
-  headheight=15pt,
-  headsep=10pt,
-  footskip=15pt,
+  headheight=14pt,
+  headsep=8pt,
+  footskip=18pt,
 }
 
 \RequirePackage{setspace}
-\setstretch{1.0}
-
 \RequirePackage{fancyhdr}
 \RequirePackage{graphicx}
 \RequirePackage[svgnames]{xcolor}
-\definecolor{jnu-blue}{RGB}{0,70,140}
 \RequirePackage{caption}
 \RequirePackage{array}
 \RequirePackage{tabularx}
 \RequirePackage{booktabs}
 \RequirePackage{multirow}
-\RequirePackage{amsmath}
-\RequirePackage{amssymb}
-\RequirePackage{bm}
+\RequirePackage{amsmath,amssymb,bm}
 \RequirePackage{enumitem}
 \RequirePackage{titletoc}
+\RequirePackage{lastpage}
+\RequirePackage{tikz}
+\RequirePackage{CJKfntef}
+\RequirePackage{etoolbox}
 
 \RequirePackage{hyperref}
 \hypersetup{
@@ -186,113 +155,124 @@
   unicode=true,
 }
 
-\RequirePackage{lastpage}
-\RequirePackage{tikz}
-\RequirePackage{CJKfntef}
-\RequirePackage{etoolbox}
+\RequirePackage[
+  backend=biber,
+  style=gb7714-2015,
+  sorting=none,
+  gbpub=false,
+  gbnamefmt=lowercase,
+]{biblatex}
 
 %% ============================================================================
-%%  Font Configuration (runs after LoadClass, based on fontset option)
+%%  Fonts
 %% ============================================================================
 
 \jnu@fontset@load
-
-% Set English (Latin) main font
 \setmainfont{Times New Roman}
 
-% Shorthand font commands
 \newcommand{\songti}{\CJKfamily{zhsong}}
 \newcommand{\heiti}{\CJKfamily{zhhei}}
 \newcommand{\kaishu}{\CJKfamily{zhkai}}
 \newcommand{\fangsong}{\CJKfamily{zhfs}}
 
 %% ============================================================================
-%%  Font Sizes
+%%  Font sizes (matching Word template exactly)
 %% ============================================================================
 
-\AtBeginDocument{\zihao{4}\songti}
+% Word sz values → real points:
+%   sz=72 → 36pt (小初号) : cover main title
+%   sz=44 → 22pt (二号)   : 诚信声明 title
+%   sz=36 → 18pt (小二号) : 论文题目
+%   sz=30 → 15pt (小三号) : chapter titles
+%   sz=28 → 14pt (四号)   : body text
+%   sz=24 → 12pt (小四号) : TOC sections
+%   sz=21 → 10.5pt (五号) : TOC subsections, captions
+%   sz=18 → 9pt (小五号)  : header
 
-\newcommand{\chuhao}{\fontsize{42pt}{50pt}\selectfont}
-\newcommand{\xiaochu}{\fontsize{36pt}{48pt}\selectfont}
-\newcommand{\yihao}{\fontsize{27.5pt}{36pt}\selectfont}
-\newcommand{\xiaoyi}{\fontsize{24pt}{32pt}\selectfont}
-\newcommand{\erhao}{\fontsize{22pt}{28pt}\selectfont}
-\newcommand{\xiaoer}{\fontsize{18pt}{24pt}\selectfont}
-\newcommand{\xiaosan}{\fontsize{15pt}{22pt}\selectfont}
+\newcommand{\sizecover}{\fontsize{36pt}{48pt}\selectfont}     % 小初号
+\newcommand{\sizestatement}{\fontsize{22pt}{28pt}\selectfont}  % 二号
+\newcommand{\sizetitle}{\fontsize{18pt}{24pt}\selectfont}      % 小二号
+\newcommand{\sizechap}{\fontsize{15pt}{22pt}\selectfont}       % 小三号
+\newcommand{\sizebody}{\fontsize{14pt}{21pt}\selectfont}       % 四号
+\newcommand{\sizetocsec}{\fontsize{12pt}{18pt}\selectfont}     % 小四号
+\newcommand{\sizecaption}{\fontsize{10.5pt}{15pt}\selectfont}  % 五号
+\newcommand{\sizeheader}{\fontsize{9pt}{12pt}\selectfont}      % 小五号
+
+% Ensure body starts at 四号 (14pt) 宋体
+\AtBeginDocument{\zihao{4}\songti\setstretch{1.0}}
 
 %% ============================================================================
-%%  Paragraph & Line Settings
+%%  Paragraph spacing
 %% ============================================================================
 
 \setlength{\parindent}{2em}
-\setlength{\parskip}{0pt}
-\lineskiplimit=3pt
-\lineskip=3pt
-
-\abovedisplayskip=4pt minus 2pt
-\belowdisplayskip=4pt minus 2pt
-\abovedisplayshortskip=2pt minus 1pt
-\belowdisplayshortskip=2pt minus 1pt
-\setlength{\arraycolsep}{4pt}
+\setlength{\parskip}{0pt plus 0pt minus 0pt}
 
 %% ============================================================================
-%%  Page Styles (Headers & Footers)
+%%  Page styles (headers and footers)
 %% ============================================================================
 
-\fancypagestyle{main}{
-  \fancyhf{}
-  \fancyhead[C]{\zihao{-5}\songti 暨南大学本科毕业论文（设计）}
-  \fancyfoot[C]{\zihao{-4}\thepage}
-  \renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{jnu-main}{%
+  \fancyhf{}%
+  \fancyhead[C]{\sizeheader\songti 暨南大学本科毕业论文（设计）}%
+  \fancyfoot[C]{\sizetocsec\thepage}%
+  \renewcommand{\headrulewidth}{0.4pt}%
 }
 
-\fancypagestyle{plain}{
-  \fancyhf{}
-  \fancyfoot[C]{\zihao{-4}\thepage}
-  \renewcommand{\headrulewidth}{0pt}
+\fancypagestyle{jnu-plain}{%
+  \fancyhf{}%
+  \fancyfoot[C]{\sizetocsec\thepage}%
+  \renewcommand{\headrulewidth}{0pt}%
 }
 
-\fancypagestyle{empty}{
-  \fancyhf{}
-  \renewcommand{\headrulewidth}{0pt}
-  \renewcommand{\footrulewidth}{0pt}
+\fancypagestyle{jnu-empty}{%
+  \fancyhf{}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \renewcommand{\footrulewidth}{0pt}%
 }
 
-\pagestyle{main}
+\pagestyle{jnu-main}
+
+% Chapter first page uses plain style
+\ctexset{chapter/pagestyle=jnu-plain}
 
 %% ============================================================================
-%%  Heading Formatting
+%%  Heading formatting (matching Word template)
 %% ============================================================================
 
+% Common settings
 \ctexset{
   chapter/name = {,},
   chapter/number = \arabic{chapter},
-  chapter/format = \xiaosan\heiti\bfseries\raggedright,
-  chapter/beforeskip = 20pt,
-  chapter/afterskip = 20pt,
+  chapter/format = \sizechap\songti\bfseries\centering,
+  chapter/beforeskip = 6pt,
+  chapter/afterskip = 6pt,
   chapter/aftername = \quad,
-  chapter/pagestyle = plain,
   %
   section/name = {,},
-  section/format = \zihao{4}\heiti\bfseries\raggedright,
-  section/beforeskip = 10pt,
-  section/afterskip = 10pt,
+  section/format = \sizebody\songti\bfseries\raggedright,
+  section/beforeskip = 3pt,
+  section/afterskip = 3pt,
   section/aftername = \quad,
+  section/indent = 0em,
   %
   subsection/name = {,},
-  subsection/format = \zihao{4}\heiti\raggedright,
-  subsection/beforeskip = 10pt,
-  subsection/afterskip = 10pt,
+  subsection/format = \sizebody\songti\bfseries\raggedright,
+  subsection/beforeskip = 3pt,
+  subsection/afterskip = 3pt,
   subsection/aftername = \quad,
+  subsection/indent = 0em,
   %
   subsubsection/name = {,},
-  subsubsection/format = \zihao{4}\raggedright,
-  subsubsection/beforeskip = 10pt,
-  subsubsection/afterskip = 10pt,
+  subsubsection/format = \sizebody\songti\raggedright,
+  subsubsection/beforeskip = 3pt,
+  subsubsection/afterskip = 3pt,
   subsubsection/aftername = \quad,
+  subsubsection/indent = 0em,
 }
 
-\ifjnu@numbering@chinese
+% Numbering scheme
+\ifjnu@num@chinese
   \ctexset{
     chapter/number = \chinese{chapter},
     section/number = \chinese{section},
@@ -311,46 +291,40 @@
 \fi
 
 %% ============================================================================
-%%  Table of Contents Formatting
+%%  Table of Contents
 %% ============================================================================
 
-\setcounter{tocdepth}{\ifjnu@toc@four 3\else 2\fi}
+\setcounter{tocdepth}{\ifjnu@toc@deep 3\else 2\fi}
 
 \titlecontents{chapter}
   [0em]
-  {\zihao{4}\heiti\bfseries}
-  {\contentslabel{1em}}
-  {\hspace*{-1em}}
+  {\sizebody\songti\bfseries}
+  {\contentslabel{1.2em}}
+  {\hspace*{-1.2em}}
   {\titlerule*[5pt]{$\cdot$}\contentspage}
   [\addvspace{3pt}]
 
 \titlecontents{section}
   [2.4em]
-  {\zihao{-4}\songti}
-  {\contentslabel{1.8em}}
-  {\hspace*{-1.8em}}
+  {\sizetocsec\songti}
+  {\contentslabel{2.0em}}
+  {\hspace*{-2.0em}}
   {\titlerule*[5pt]{$\cdot$}\contentspage}
 
 \titlecontents{subsection}
-  [4.6em]
-  {\zihao{5}\songti}
-  {\contentslabel{2.6em}}
-  {\hspace*{-2.6em}}
-  {\titlerule*[5pt]{$\cdot$}\contentspage}
-
-\titlecontents{subsubsection}
-  [6.4em]
-  {\zihao{5}\songti}
-  {\contentslabel{3.4em}}
-  {\hspace*{-3.4em}}
+  [4.8em]
+  {\sizecaption\songti}
+  {\contentslabel{2.8em}}
+  {\hspace*{-2.8em}}
   {\titlerule*[5pt]{$\cdot$}\contentspage}
 
 %% ============================================================================
-%%  Caption Configuration
+%%  Captions (table/figure)
 %% ============================================================================
 
 \captionsetup{
   font={small},
+  labelfont={bf},
   labelsep=quad,
   justification=centering,
   format=plain,
@@ -366,32 +340,17 @@
 }
 
 %% ============================================================================
-%%  Metadata Commands
+%%  User metadata commands
 %% ============================================================================
 
 \newcommand{\biaoti}[1]{\gdef\@biaoti{#1}}
-\biaoti{在此处键入论文题目}
-
 \newcommand{\entitle}[1]{\gdef\@entitle{#1}}
-\entitle{Type Your English Thesis Title Here}
-
 \newcommand{\xueyuan}[1]{\gdef\@xueyuan{#1}}
-\xueyuan{}
-
 \newcommand{\xuexi}[1]{\gdef\@xuexi{#1}}
-\xuexi{}
-
 \newcommand{\zhuanye}[1]{\gdef\@zhuanye{#1}}
-\zhuanye{}
-
 \newcommand{\xingming}[1]{\gdef\@xingming{#1}}
-\xingming{}
-
 \newcommand{\xuehao}[1]{\gdef\@xuehao{#1}}
-\xuehao{}
-
 \newcommand{\daoshi}[1]{\gdef\@daoshi{#1}}
-\daoshi{}
 
 \newcommand{\thesisyear}[1]{\gdef\@thesisyear{#1}}
 \newcommand{\thesismonth}[1]{\gdef\@thesismonth{#1}}
@@ -400,163 +359,168 @@
 \thesismonth{\the\month}
 \thesisday{\the\day}
 
-\newcommand{\thesisdate}[3]{%
-  \thesisyear{#1}\thesismonth{#2}\thesisday{#3}%
-}
+\newcommand{\thesisdate}[3]{\thesisyear{#1}\thesismonth{#2}\thesisday{#3}}
+
+% Default values
+\biaoti{在此处键入论文题目}
+\entitle{Type Your English Thesis Title Here}
+\xueyuan{}
+\xuexi{}
+\zhuanye{}
+\xingming{}
+\xuehao{}
+\daoshi{}
 
 %% ============================================================================
-%%  Cover Page
+%%  Cover page  (matching Word 本科毕业论文封面.docx)
 %% ============================================================================
 
 \newcommand{\makecover}{%
-  \thispagestyle{empty}
+  \thispagestyle{jnu-empty}
   \begin{titlepage}
-    \begin{center}
-      \IfFileExists{figs/jnu-logo.png}{%
-        \includegraphics[width=4cm]{figs/jnu-logo.png}
-      }{%
-        \vspace{2cm}
-        \textbf{[University Logo -- Place figs/jnu-logo.png]}
-      }
+    \centering
+    \vspace*{1.5cm}
 
-      \vspace{1.5cm}
+    % University logo
+    \IfFileExists{figs/jnu-logo.png}{%
+      \includegraphics[height=3.5cm]{figs/jnu-logo.png}
+    }{%
+      \fbox{\parbox{3.5cm}{\centering\vspace{1.5cm}校徽\\logo\vspace{1.5cm}}}
+    }
 
-      {\xiaochu\heiti 本科生毕业论文}
+    \vspace{1.5cm}
 
-      \vspace{3cm}
+    % "本科生毕业论文" — SimHei, 小初号(36pt)
+    {\sizecover\heiti 本科生毕业论文}
 
-      \begin{flushleft}
-        \hspace{2em}%
-        {\zihao{-2}\heiti\bfseries 论文题目}%
-        \hspace{1em}%
-        \CJKunderline{\hspace{8cm}}%
-      \end{flushleft}
+    \vspace{3cm}
 
-      \vspace{0.8cm}
+    % Title field
+    \begin{flushleft}
+      \hspace{2em}%
+      {\sizetitle\songti\bfseries 论文题目}%
+      \hspace{0.5em}%
+      {\sizetitle\songti\CJKunderline{\makebox[5.5cm]{\hfill\@biaoti\hfill}}}
+    \end{flushleft}
 
-      \begin{flushleft}
-        \zihao{4}\songti\bfseries
-        \begin{tabular}{@{}p{2cm}p{5cm}p{2cm}p{5cm}@{}}
-          学\hfill 院 & \CJKunderline{\makebox[5cm]{\hfill\@xueyuan\hfill}} &
-          学\hfill 系 & \CJKunderline{\makebox[5cm]{\hfill\@xuexi\hfill}} \\
-          \\[0.5cm]
-          专\hfill 业 & \CJKunderline{\makebox[5cm]{\hfill\@zhuanye\hfill}} & & \\
-          \\[0.5cm]
-          姓\hfill 名 & \CJKunderline{\makebox[5cm]{\hfill\@xingming\hfill}} &
-          学\hfill 号 & \CJKunderline{\makebox[5cm]{\hfill\@xuehao\hfill}} \\
-          \\[0.5cm]
-          指导教师 & \CJKunderline{\makebox[5cm]{\hfill\@daoshi\hfill}} & & \\
-        \end{tabular}
-      \end{flushleft}
+    \vspace{1cm}
 
-      \vspace{3cm}
+    % Info fields
+    \begin{flushleft}
+      \sizebody\songti\bfseries
+      \renewcommand{\arraystretch}{2.0}
+      \begin{tabular}{@{}p{2.2cm}p{5cm}p{2.2cm}p{5cm}@{}}
+        学\hfill 院 &
+        \CJKunderline{\makebox[5cm]{\hfill\@xueyuan\hfill}} &
+        学\hfill 系 &
+        \CJKunderline{\makebox[5cm]{\hfill\@xuexi\hfill}} \\
+        专\hfill 业 &
+        \CJKunderline{\makebox[5cm]{\hfill\@zhuanye\hfill}} & & \\
+        姓\hfill 名 &
+        \CJKunderline{\makebox[5cm]{\hfill\@xingming\hfill}} &
+        学\hfill 号 &
+        \CJKunderline{\makebox[5cm]{\hfill\@xuehao\hfill}} \\
+        指导教师 &
+        \CJKunderline{\makebox[5cm]{\hfill\@daoshi\hfill}} & & \\
+      \end{tabular}
+    \end{flushleft}
 
-      {\zihao{4}\songti\bfseries
-       \@thesisyear \hspace{1em} 年
-       \hspace{2em} \@thesismonth \hspace{1em} 月
-       \hspace{2em} \@thesisday \hspace{1em} 日}
+    \vspace{2.5cm}
 
-      \vspace{1cm}
+    % Date
+    {\sizebody\songti\bfseries
+     \@thesisyear \hspace{1.5em} 年
+     \hspace{2em} \@thesismonth \hspace{1.5em} 月
+     \hspace{2em} \@thesisday \hspace{1.5em} 日}
 
-      \IfFileExists{figs/jnu-name.png}{%
-        \includegraphics[width=6cm]{figs/jnu-name.png}
-      }{}
+    \vfill
 
-    \end{center}
+    % University name calligraphy at bottom
+    \IfFileExists{figs/jnu-name.png}{%
+      \includegraphics[width=5cm]{figs/jnu-name.png}
+    }{}
+
+    \vspace{0.5cm}
   \end{titlepage}
   \clearpage
 }
 
 %% ============================================================================
-%%  Academic Honesty Statement (诚信声明)
+%%  Academic honesty statement (诚信声明)
 %% ============================================================================
 
 \newcommand{\makestatement}{%
-  \thispagestyle{empty}
+  \thispagestyle{jnu-empty}
   \vspace*{2cm}
   \begin{center}
-    {\erhao\heiti 诚\hspace{2em}信\hspace{2em}声\hspace{2em}明}
+    {\sizestatement\songti\bfseries 诚\hspace{2em}信\hspace{2em}声\hspace{2em}明}
   \end{center}
   \vspace{2cm}
   \par
-  {\zihao{-3}\songti
-    我声明，所呈交的毕业论文（设计）是本人在老师指导下进行的研究工作及取得的研究成果。除文中已经注明引用的内容外，本论文（设计）不包含任何其他个人或集体已经发表或撰写过的作品成果。在论文（设计）撰写过程中，本人严格遵守学术道德和学术规范，恪守学术诚信，对毕业论文（设计）的原创性、真实性负责。
+  {\sizechap\songti
+    我声明，所呈交的毕业论文（设计）是本人在老师指导下进行的研究工作及取得的
+    研究成果。除文中已经注明引用的内容外，本论文（设计）不包含任何其他个人或
+    集体已经发表或撰写过的作品成果。在论文（设计）撰写过程中，本人严格遵守学
+    术道德和学术规范，恪守学术诚信，对毕业论文（设计）的原创性、真实性负责。
   }
   \vspace{3cm}
   \par
-  {\zihao{-3}\songti
-    签名：\hspace{5cm}
-    日期：\hspace{2em}\hspace{0.5cm}年\hspace{1.5cm}月\hspace{1.5cm}日
+  {\sizechap\songti
+    签名：\hspace{4.5cm}
+    日期：\hspace{1.5em}\hspace{0.5cm}年\hspace{1.5cm}月\hspace{1.5cm}日
   }
   \clearpage
 }
 
 %% ============================================================================
-%%  Chinese Abstract Environment
+%%  Chinese abstract
 %% ============================================================================
 
 \newenvironment{zhabstract}{%
   \chapter*{摘\hspace{2em}要}
   \addcontentsline{toc}{chapter}{摘要}
-  \thispagestyle{plain}
-  \vspace{1em}
+  \thispagestyle{jnu-plain}
   \par
+  \sizebody\songti
   \setlength{\parindent}{2em}
-  \zihao{4}\songti
 }{%
-  \par
+  \par\pagebreak[2]
 }
 
 \newcommand{\zhaiyao}[1]{%
-  \vspace{1em}
-  \par
-  \noindent
-  {\heiti\bfseries [关键词]} \hspace{0.5em} #1
+  \vspace{0.5em}
+  \par\noindent
+  {\songti\bfseries [关键词]} \hspace{0.5em} #1
 }
 
 %% ============================================================================
-%%  English Abstract Environment
+%%  English abstract
 %% ============================================================================
 
 \newenvironment{enabstract}{%
   \chapter*{\textbf{Abstract}}
   \addcontentsline{toc}{chapter}{Abstract}
-  \thispagestyle{plain}
-  \vspace{1em}
+  \thispagestyle{jnu-plain}
   \par
+  \sizebody
   \setlength{\parindent}{2em}
-  \zihao{4}
 }{%
-  \par
+  \par\pagebreak[2]
 }
 
 \newcommand{\enkeywords}[1]{%
-  \vspace{1em}
-  \par
-  \noindent
-  {\textbf{Keywords:}} \hspace{0.5em} #1
+  \vspace{0.5em}
+  \par\noindent
+  {\bfseries Keywords:} \hspace{0.5em} #1
 }
 
 %% ============================================================================
-%%  Bibliography Configuration
+%%  Bibliography
 %% ============================================================================
 
-\IfFileExists{biblatex-gb7714-2015.bbx}{%
-  \RequirePackage[backend=biber,style=gb7714-2015,sorting=none]{biblatex}
-  \newcommand{\upcite}[1]{\textsuperscript{\cite{#1}}}
-}{%
-  \IfFileExists{biblatex.sty}{%
-    \RequirePackage[backend=biber,style=numeric,sorting=none]{biblatex}
-    \newcommand{\upcite}[1]{\textsuperscript{\cite{#1}}}
-  }{%
-    \RequirePackage[numbers,sort&compress]{natbib}
-    \newcommand{\upcite}[1]{\textsuperscript{\cite{#1}}}
-    \bibliographystyle{unsrt}
-  }
-}
 
 %% ============================================================================
-%%  Appendix Configuration
+%%  Appendix
 %% ============================================================================
 
 \ctexset{
@@ -565,22 +529,21 @@
 }
 
 %% ============================================================================
-%%  Other Utility Commands
+%%  Math utilities
 %% ============================================================================
 
 \DeclareMathOperator{\Corr}{Corr}
 \DeclareMathOperator{\Cov}{Cov}
 \DeclareMathOperator{\Var}{Var}
 \DeclareMathOperator{\grad}{grad}
-
 \newcommand{\diff}{\mathop{}\!\mathrm{d}}
 
 %% ============================================================================
-%%  Load Local Configuration (if exists)
+%%  Local config
 %% ============================================================================
 
 \InputIfFileExists{jnuthesis.cfg}{%
-  \typeout{Loading local jnuthesis.cfg configuration}%
+  \typeout{Loading jnuthesis.cfg}%
 }{}
 
 \endinput

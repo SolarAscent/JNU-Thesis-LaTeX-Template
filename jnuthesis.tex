@@ -1,30 +1,25 @@
 %%
 %% !TEX program = xelatex
 %%
-%% Jinan University (暨南大学) Undergraduate Thesis Template
-%% Version: 1.0, 2026/06/04
+%% 暨南大学 (Jinan University) 本科毕业论文
+%% LaTeX Template v1.0 — 2026
 %%
 %% Usage:
-%%   1. Fill in your metadata below (title, name, advisor, etc.)
-%%   2. Write your content in the Chapters/ folder
-%%   3. Run: latexmk -pdf jnuthesis
+%%   1. Fill in metadata below
+%%   2. Write content in Chapters/
+%%   3. Compile: latexmk -pdf -xelatex jnuthesis
 %%
 %% Class options:
-%%   numbering=chinese   — 一、（一）、1、（1） (default)
-%%   numbering=arabic    — 1, 1.1, 1.1.1
-%%   fontset=mac         — macOS (pre-installed fonts)
-%%   fontset=windows     — Windows (pre-installed fonts)
-%%   fontset=ubuntu      — Ubuntu (need fonts-noto-cjk)
-%%   fontset=fandol      — Cross-platform fallback (bundled with TeX Live)
-%%   fontset=sourcehan   — Source Han fonts (install separately)
-%%   toc-depth=4         — Show subsubsection in TOC
-%%   draft               — Fast draft mode (no images)
+%%   numbering=arabic  — 1, 1.1, 1.1.1 (default, matches Word TOC)
+%%   numbering=chinese — 一、(一)、1、(1)
+%%   fontset=fandol|mac|windows|ubuntu|sourcehan
+%%   toc-depth=4       — include subsubsection in TOC
 %%
 
-\documentclass[numbering=chinese,fontset=fandol]{jnuthesis}
+\documentclass[numbering=arabic,fontset=fandol]{jnuthesis}
 
 %% ============================================================================
-%%  Metadata — Fill in your information here
+%%  METADATA — fill in your information
 %% ============================================================================
 
 \biaoti{在此处键入论文题目}
@@ -41,73 +36,309 @@
 \thesisdate{2026}{6}{4}
 
 %% ============================================================================
-%%  Bibliography
+%%  BIBLIOGRAPHY
 %% ============================================================================
 
 \addbibresource{refs.bib}
 
 %% ============================================================================
-%%  Begin Document
+%%  DOCUMENT
 %% ============================================================================
 
 \begin{document}
 
-% ============================================
-%  FRONT MATTER
-% ============================================
+%% ===== FRONT MATTER =====
 
-% --- Cover Page (封面) ---
+% Cover page (封面)
 \makecover
 
-% --- Academic Honesty Statement (诚信声明) ---
+% Academic Honesty Statement (诚信声明)
 \makestatement
 
-% --- Chinese Abstract (中文摘要) ---
+% Chinese Abstract (中文摘要)
 \begin{zhabstract}
 
-编写摘要应注意：中文摘要应语言精炼、明确，扼要叙述毕业论文（设计）的主要内容，包括研究目的与意义、研究内容与方法以及研究结论等。一般不超过300字。
-
 本研究围绕[研究主题]展开，通过文献综述和实证分析，探讨了[研究问题]。研究采用[研究方法]，对[研究对象]进行了深入分析。研究结果表明，[主要发现]。本研究对于[研究意义]具有一定的理论价值和实践参考意义。
+
+编写摘要应注意：中文摘要应语言精炼、明确，扼要叙述毕业论文（设计）的主要内容，包括研究目的与意义、研究内容与方法以及研究结论等。一般不超过300字。
 
 \zhaiyao{关键词1；关键词2；关键词3；关键词4；关键词5}
 \end{zhabstract}
 
-% --- English Abstract ---
+% English Abstract
 \begin{enabstract}
 
-The English abstract should be consistent with the Chinese abstract, grammatically correct, and accurately reflect the content of the thesis.
-
 This study focuses on [research topic], exploring [research question] through literature review and empirical analysis. Using [research method], the study provides an in-depth analysis of [research object]. The results indicate that [main findings]. This research has theoretical value and practical significance for [research significance].
+
+The English abstract should be consistent with the Chinese abstract, grammatically correct, and accurately reflect the content of the thesis.
 
 \enkeywords{Keyword1; Keyword2; Keyword3; Keyword4; Keyword5}
 \end{enabstract}
 
-% --- Table of Contents (目录) ---
+% Table of Contents (目录)
 \tableofcontents
 
-% ============================================
-%  MAIN MATTER
-% ============================================
+%% ===== MAIN MATTER =====
 
-\input{Chapters/01-Introduction}
-\input{Chapters/02-Chapter}
-\input{Chapters/03-Methodology}
-\input{Chapters/04-Experiments}
-\input{Chapters/05-Conclusion}
+% Chapter 1
+\chapter{绪论}
 
-% ============================================
-%  BACK MATTER
-% ============================================
+\section{文献综述}
 
-% --- References (参考文献) ---
+介绍该研究的国内外现状，已取得的成果等。可分小节介绍。
+
+通过文献综述，可以全面了解该领域的研究现状和发展趋势，明确已有研究的贡献和不足，为本研究的定位和创新提供依据。文献综述的撰写应遵循系统性、客观性和批判性的原则，避免简单的文献罗列。
+
+\subsection{国内研究现状}
+
+国内学者在相关领域进行了广泛而深入的研究。近年来，随着理论的发展和方法的创新，国内研究取得了显著的进展。研究者们从不同的理论视角出发，采用多种研究方法，探讨了该问题的各个维度。
+
+\subsection{国外研究现状}
+
+国外学者在该领域的研究起步较早，理论基础较为深厚。国际上对该问题的关注度持续上升，研究成果日益丰富。不同国家和地区的学者根据各自的研究背景和现实需求，提出了多种研究框架和分析方法。
+
+\section{研究框架}
+
+阐述本论文的研究目标、研究内容、创新之处、研究方法等。研究框架是论文的总体设计蓝图，应当清晰地展示研究的逻辑结构和技术路线。
+
+\subsection{研究目标}
+
+本研究旨在深入探究[研究问题]，通过构建理论模型并进行实证检验，揭示变量之间的内在关系，为相关领域的理论发展和实践应用提供有价值的参考。
+
+\subsection{研究内容}
+
+本研究的主要内容包括以下几个方面：首先，系统梳理相关理论和研究文献；其次，构建研究模型并提出研究假设；再次，通过数据收集和实证分析检验假设；最后，总结研究结论并提出建议。
+
+\subsection{研究方法}
+
+本研究综合运用了文献研究法、问卷调查法和统计分析等多种研究方法，确保研究结论的科学性和可靠性。
+
+\subsection{创新之处}
+
+本研究的创新之处主要体现在研究视角的独特性、理论框架的整合性以及研究方法的综合性等方面。
+
+\section{术语说明}
+
+解释本文中出现的术语。特定含义的名词术语或新名词、以及使用外文缩写代替某一名词术语时，首次出现时应在括号内注明其含义，如：经济合作与发展组织（Organisation for Economic Co-operation and Development, OECD）。
+
+\subsection{名词术语规范}
+
+科学技术名词术语尽量采用全国自然科学名词审定委员会公布的规范词或国家标准、部标准中规定的名称，尚未统一规定或叫法有争议的名词术语，可采用惯用的名称。
+
+\subsection{计量单位和数字表示}
+
+毕业论文（设计）中某一物理量的名称和符号应统一，应采用国务院发布的《中华人民共和国法定计量单位》、国际公认或各行业领域惯用的计量单位。单位名称和符号的书写方式，应采用国际通用符号。
+
+毕业论文（设计）中的测量统计数据无特别约定情况下，一般采用阿拉伯数字表示，年份一律使用4位数字表示。
+
+%% Chapter 2
+\chapter{非常规文本类型格式模板}
+
+本章主要展示毕业论文中各类非常规文本类型的格式规范，包括表格、插图、公式以及参考文献的引用格式。
+
+\section{表格规范}
+
+表格必须与论文叙述有直接联系，不得出现与论文叙述脱节的表格。表格中的内容不得与正文矛盾。每个表格都应有自己的标题和序号。标题应写在表格上方正中，不加标点，序号写在标题左方，表格须按章进行编序。表序必须连续，不得跳缺。
+
+表中数据应正确无误，书写清楚。数字空缺的格内加"—"字线（占2个数字宽度）。表内文字和数字上、下或左、右相同时，不允许用"″"、"同上"之类的写法，可采用通栏处理方式。
+
+\begin{table}[htbp]
+  \centering
+  \caption{合金钢的化学成分与力学性能}
+  \label{tab:alloy}
+  \begin{tabular}{cccccc}
+    \toprule
+    材料名称 & C & Mn & Cr & 其他 & 抗拉强度 $\sigma_b$（N/mm$^2$） \\
+    \midrule
+    合金钢A & 0.15 & 1.20 & 0.80 & — & 520 \\
+    合金钢B & 0.22 & 1.50 & 1.10 & Ni:0.30 & 650 \\
+    合金钢C & 0.18 & 1.00 & 0.60 & Mo:0.15 & 480 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{插图规范}
+
+插图应与文字内容相符。所有制图应符合国家标准和专业标准。对无规定符号的图形应采用该行业的常用画法。
+
+每幅插图应有标题和序号，须按章进行编序，图序必须连续，不重复，不跳缺。插图标题写在图的下方正中。
+
+\begin{figure}[htbp]
+  \centering
+  \fbox{\parbox{0.6\textwidth}{\centering\vspace{3cm}此处插入图片\\（示例占位框）\\[3cm]}}
+  \caption{示例插图标题}
+  \label{fig:example}
+\end{figure}
+
+如图\ref{fig:example}所示，插图应与正文内容紧密配合。插图的坐标比例、线条粗细、字体大小等应符合出版要求。
+
+\section{公式规范}
+
+公式应另起一行写在中间。公式较长时最好在等号处转行。公式须按章进行编序，公式序号写在公式右侧齐右端线。
+
+\begin{equation}
+  E = mc^2
+  \label{eq:einstein}
+\end{equation}
+
+如式\eqref{eq:einstein}所示，这是著名的质能方程。公式中的符号应在公式下方进行解释说明。
+
+\begin{equation}
+  \frac{\partial u}{\partial t} = \alpha \left(
+    \frac{\partial^2 u}{\partial x^2} +
+    \frac{\partial^2 u}{\partial y^2}
+  \right)
+  \label{eq:heat}
+\end{equation}
+
+式\eqref{eq:heat}为二维热传导方程，其中 $u$ 表示温度，$t$ 表示时间，$\alpha$ 为热扩散系数。
+
+\section{引用规范}
+
+引用参考文献时采用顺序编码制，即按照文章正文部分引用的先后顺序连续编码。引用时使用上标格式标注在引文右上角\supercite{ref-example-1}。
+
+多个参考文献同时引用时，按编号从小到大排列。多次引用同一参考文献时，使用同一编号\supercite{ref-example-2}。
+
+%% Chapter 3
+\chapter{方法设计}
+
+\section{理论框架}
+
+本研究基于相关理论基础，构建了系统的研究框架。理论框架是研究的基础，它为研究假设的提出和实证分析提供了理论支撑。本研究综合运用了多种理论视角，力求构建一个全面、系统的分析框架。
+
+\section{研究假设}
+
+根据理论分析和文献综述的结果，本研究提出以下研究假设：
+
+\textbf{假设1：} 变量A对变量B具有显著的正向影响。
+
+\textbf{假设2：} 变量C在变量A与变量B的关系中起中介作用。
+
+\textbf{假设3：} 变量D对变量A与变量B的关系具有调节效应。
+
+\section{研究模型}
+
+基于以上理论分析和研究假设，本研究构建了研究模型。该模型包含了自变量、因变量、中介变量和调节变量，能够全面反映各变量之间的关系。研究模型的构建遵循理论驱动和实际可操作的原则。
+
+%% Chapter 4
+\chapter{实验与评估}
+
+\section{数据收集}
+
+本研究采用问卷调查法收集数据。问卷设计参考了国内外成熟量表，并根据本研究的具体情境进行了适当的调整和修改。共计发放问卷500份，回收有效问卷428份，有效回收率为85.6\%。
+
+\section{描述性统计分析}
+
+对收集到的数据进行了描述性统计分析，包括样本基本特征的分布情况和各变量的均值、标准差等统计指标。分析结果表明，样本具有良好的代表性，各变量的分布特征符合进一步统计分析的要求。
+
+\section{假设检验}
+
+运用统计分析方法对研究假设进行了检验。主要检验结果如下：
+
+假设1得到支持，变量A对变量B具有显著的正向影响（$\beta = 0.45$，$p < 0.001$）。
+
+假设2得到支持，变量C的中介效应显著。
+
+假设3得到部分支持，变量D的调节效应在特定条件下显著。
+
+\section{结果讨论}
+
+对假设检验的结果进行了深入讨论，结合已有理论和研究成果，解释了研究发现的含义和启示。同时，分析了研究过程中存在的局限性和不足之处，为后续研究提供了改进方向。
+
+%% Chapter 5
+\chapter{结论与展望}
+
+\section{研究结论}
+
+本研究通过理论分析和实证研究，得出以下主要结论：
+
+第一，变量A对变量B具有显著的正向影响。这一发现与已有研究结果一致，进一步验证和完善了相关理论。
+
+第二，变量C在变量A与变量B的关系中发挥了中介作用，揭示了二者关系的内在机制。
+
+第三，变量D的调节效应在特定条件下显著，为研究边界条件提供了新的实证证据。
+
+\section{理论贡献}
+
+本研究的理论贡献主要体现在：丰富了相关领域的理论研究成果，为后续研究提供了新的分析视角和研究框架；揭示了变量间关系的内在机制和边界条件，推进了相关理论的深化和拓展。
+
+\section{实践启示}
+
+本研究的实践启示包括：为组织管理实践提供了基于实证证据的决策参考；为相关政策制定提供了科学的依据和具体的方向建议。
+
+\section{研究局限与未来展望}
+
+本研究存在以下局限性：样本来源相对集中，可能在一定程度上影响研究结论的外部效度；采用横截面研究设计，难以严格推断变量之间的因果关系。
+
+未来研究可以从以下方向展开：扩大样本来源的地域和行业范围，提高研究结论的普适性和推广性；采用纵向追踪研究设计，揭示变量间的动态演变规律；引入更多可能的解释变量和调节变量，进一步完善研究模型。
+
+%% ===== BACK MATTER =====
+
+% References (参考文献)
 \printbibliography[title={参考文献}]
 
-% --- Appendices (附录) ---
+% Appendices (附录)
 \appendix
-\input{Chapters/Appendix-A}
-\input{Chapters/Appendix-B}
 
-% --- Acknowledgments (致谢) ---
-\input{Chapters/Acknowledgments}
+\chapter{数据可用性}
+
+本研究使用的数据包括问卷调查数据和公开统计数据。所有原始数据已经过匿名化处理，在合理要求下可向通讯作者索取。
+
+\section{数据来源}
+
+本研究的主要数据来源包括：
+
+（1）问卷调查数据：通过网络问卷平台收集，调查时间为2025年9月至12月。问卷发放遵循随机抽样原则，确保样本具有较好的代表性。
+
+（2）统计数据：来源于国家统计局及相关部门公开发布的年度统计数据和行业报告。
+
+\section{数据处理方法}
+
+数据处理主要使用SPSS 26.0和AMOS 24.0软件。在数据分析之前，对原始数据进行了严格的清洗和预处理，删除了存在明显不合理异常值的样本。
+
+\chapter{在学期间完成的相关学术成果}
+
+\section{学术论文}
+
+\begin{enumerate}[label={[\arabic*]}]
+  \item 作者1, 作者2. 论文题目. 期刊名称, 2025, 卷(期): 起止页码.
+\end{enumerate}
+
+\section{知识产权}
+
+\begin{enumerate}[label={[\arabic*]}]
+  \item 发明人. 专利名称. 专利号, 授权日期.
+\end{enumerate}
+
+\section{项目经历}
+
+\begin{enumerate}[label={[\arabic*]}]
+  \item 项目名称. 项目来源, 起止时间.（参与/主持）
+\end{enumerate}
+
+\section{比赛获奖}
+
+\begin{enumerate}[label={[\arabic*]}]
+  \item 获奖名称. 获奖等级, 获奖日期.
+\end{enumerate}
+
+\section{荣誉称号}
+
+\begin{enumerate}[label={[\arabic*]}]
+  \item 荣誉称号名称. 授予单位, 授予日期.
+\end{enumerate}
+
+% Acknowledgments (致谢)
+\chapter{致谢}
+
+在毕业论文完成之际，谨向所有给予我指导、帮助和支持的老师、同学和家人表示衷心的感谢。
+
+感谢指导教师在整个毕业论文过程中的悉心指导和无私帮助。从选题确定、研究设计到论文撰写，老师都给予了精心的指导和宝贵的建议，使我受益匪浅。
+
+感谢学院的各位老师四年来传授的专业知识和研究方法，这些为本文的完成奠定了坚实的理论基础。
+
+感谢同学们的鼓励和帮助，与大家的交流和讨论为本研究提供了许多灵感和思路。
+
+感谢家人一直以来的理解、支持和付出，你们是我完成学业最坚强的后盾。
 
 \end{document}
