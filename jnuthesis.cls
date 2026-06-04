@@ -546,26 +546,26 @@
 
 \newcommand{\makestatement}{%
   \thispagestyle{jnu-front}
-  \vspace*{20mm}
+  \vspace*{4mm}
   \begin{center}
     {\sizestatement\songti\bfseries 诚\hspace{1em}信\hspace{1em}声\hspace{1em}明}
   \end{center}
-  \vspace{25mm}
+  \vspace{10mm}
   \par
-  {\sizefront\songti\setstretch{1.65}
+  {\sizefront\songti\setstretch{1}
     我声明，所呈交的毕业论文（设计）是本人在老师指导下进行的研究工作及取得的
     研究成果。除文中已经注明引用的内容外，本论文（设计）不包含任何其他个人或
     集体已经发表或撰写过的作品成果。在论文（设计）撰写过程中，本人严格遵守学
     术道德和学术规范，恪守学术诚信，坚决杜绝任何形式的抄袭、剽窃、伪造、篡改、
     买卖、代写毕业论文等学术不端行为，本人自愿承担因违反上述承诺而产生的后果和责任。
   }
-  \vspace{45mm}
+  \vspace{23mm}
   \par
   {\sizefront\songti
     签名：\hspace{38mm}
     日期：\hspace{1.2em}年\hspace{1.2em}月\hspace{1.2em}日
   }
-  \clearpage
+  \vspace{34mm}
 }
 
 %% ============================================================================
@@ -574,15 +574,14 @@
 
 \newenvironment{zhabstract}{%
   \thispagestyle{jnu-front}
-  \vspace*{8mm}
   \begin{center}
     {\sizetitle\songti\bfseries [\@biaoti]}
   \end{center}
-  \vspace{18mm}
+  \vspace{11.5mm}
   \par
   \sizebody\songti
   \setlength{\parindent}{2em}
-  \setstretch{1.65}
+  \setstretch{1}
   \noindent{\songti\bfseries [摘\hspace{1em}要]}\hspace{0.5em}
 }{%
   \par
@@ -601,16 +600,16 @@
 
 \newenvironment{enabstract}{%
   \thispagestyle{jnu-front}
-  \vspace*{8mm}
+  \vspace*{5.75mm}
   \begin{center}
     {\sizetitle\bfseries [\@entitle]}
   \end{center}
-  \vspace{18mm}
+  \vspace{11.5mm}
   \par
   \sizebody
   \setlength{\parindent}{2em}
-  \setstretch{1.65}
-  \noindent{\bfseries Abstract:}\hspace{0.5em}
+  \setstretch{1}
+  \noindent{\bfseries Abstract：}\hspace{0.5em}
 }{%
   \par
   \clearpage
@@ -619,7 +618,7 @@
 \newcommand{\enkeywords}[1]{%
   \vspace{0.5em}
   \par\noindent
-  {\bfseries Keywords:} \hspace{0.5em} #1
+  {\bfseries Keywords：} \hspace{0.5em} #1
 }
 
 %% ============================================================================
