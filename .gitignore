@@ -10,6 +10,7 @@
 *.run.xml
 *.synctex.gz
 *.toc
+*.xdv
 *.lof
 *.lot
 *.tdo
@@ -19,6 +20,7 @@
 *~
 *.bak
 *.swp
+~$*.docx
 
 # OS files
 .DS_Store
@@ -26,6 +28,8 @@ Thumbs.db
 
 # Compiled output (optional - comment out to track PDF)
 # *.pdf
+build/
+.codex-analysis/
 
 # Python
 __pycache__/

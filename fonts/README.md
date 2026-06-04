@@ -1,141 +1,79 @@
-# Font Setup Guide / 字体配置指南
+# Font Setup / 字体配置
 
-This template supports **6 font configurations** via the `fontset` class option.
+[中文](#中文) · [English](#english)
 
-For **Word-identical output**, use `fontset=windows` (on Windows) or `fontset=bundled` (any platform, including Overleaf).
+## 中文
 
----
+官方 Word 模板主要依赖宋体、黑体和 Times New Roman。LaTeX 要尽量接近 Word，关键是中文字体。
 
-## Quick Reference / 快速参考
+### 推荐方案
 
-| fontset | Word Match | Requires | Platform |
-|---------|-----------|----------|----------|
-| `windows` | ⭐⭐⭐ Perfect | SimSun/SimHei in system | Windows only |
-| `bundled` | ⭐⭐⭐ Perfect | Font files in `fonts/` dir | Any (incl. Overleaf) |
-| `mac` | ⭐⭐ Close | System fonts (preinstalled) | macOS |
-| `ubuntu` | ⭐⭐ Close | `fonts-noto-cjk` | Linux |
-| `sourcehan` | ⭐⭐ Close | Source Han fonts | Cross-platform |
-| `fandol` | ⭐ Works | None (TeX Live default) | Cross-platform |
+| 场景 | 文档类选项 | 说明 |
+| --- | --- | --- |
+| Windows 本地 | `fontset=windows` | 使用系统 SimSun/SimHei |
+| TeXPage / Overleaf / macOS / Linux | `fontset=bundled` | 从本目录加载字体文件，最适合最终稿 |
+| macOS 草稿 | `fontset=mac` | 使用 Songti SC/Heiti SC，外观接近 |
+| 零配置草稿 | `fontset=auto` 或 `fontset=fandol` | 优先保证可编译，字体不保证完全一致 |
 
----
+### 使用 bundled 字体
 
-## 🥇 Best: Word-Identical Fonts (SimSun / 宋体 + SimHei / 黑体)
+从 Windows 的 `C:\Windows\Fonts\` 复制以下文件到本目录：
 
-Word uses the **中易字库 (Zhongyi Font Library)** for Chinese text. To get identical output in LaTeX, you must use the same fonts.
-
-### On Windows (fontset=windows)
-
-SimSun and SimHei are pre-installed. Use:
-
-```latex
-\documentclass[fontset=windows]{jnuthesis}
-```
-
-### On macOS / Linux / Overleaf (fontset=bundled)
-
-1. **Obtain the font files** from a Windows system (`C:\Windows\Fonts\`):
-
-| Font | Windows Filename |
-|------|-----------------|
-| 宋体 (SimSun) | `simsun.ttc` |
-| 黑体 (SimHei) | `simhei.ttf` |
-| 楷体 (KaiTi) | `simkai.ttf` |
-| 仿宋 (FangSong) | `simfang.ttf` |
-
-2. **Copy the files** to the `fonts/` directory in this project:
-
-```
+```text
 fonts/
 ├── README.md
-├── simsun.ttc      ← you add these
+├── simsun.ttc
 ├── simhei.ttf
 ├── simkai.ttf
 └── simfang.ttf
 ```
 
-3. **Use in your document**:
+然后在主文件中使用：
 
 ```latex
-\documentclass[fontset=bundled]{jnuthesis}
+\documentclass[numbering=arabic,fontset=bundled]{jnuthesis}
 ```
 
-> ⚠️ **For Overleaf**: Upload the font files alongside `jnuthesis.tex` and use `fontset=bundled`. The template loads fonts by **filename** from the project directory, which works on Overleaf's server.
-
-> 💡 **On macOS**: You can also find SimSun in `/Applications/Microsoft Word.app/Contents/Resources/DFonts/` if you have Word installed.
-
----
-
-## 🥈 macOS: System Songti/Heiti (fontset=mac)
-
-macOS includes high-quality Chinese fonts that are close to SimSun/SimHei:
-
-```latex
-\documentclass[fontset=mac]{jnuthesis}
-```
-
-| Role | macOS Font |
-|------|-----------|
-| Body (宋体) | Songti SC |
-| Heading (黑体) | Heiti SC |
-| Statement (楷体) | Kaiti SC |
-
----
-
-## 🥉 Cross-platform Fallbacks
-
-### Fandol (fontset=fandol) — Zero-config
-
-Fandol fonts are bundled with **all TeX Live installations**. Use when you just need to compile and don't care about exact font matching:
-
-```latex
-\documentclass[fontset=fandol]{jnuthesis}
-```
-
-> ⚠️ Fandol's stroke weight and style differ noticeably from SimSun. Use only for drafting.
-
-### Ubuntu/Debian (fontset=ubuntu)
+### 检查字体
 
 ```bash
-sudo apt-get install fonts-noto-cjk
-```
-
-```latex
-\documentclass[fontset=ubuntu]{jnuthesis}
-```
-
-### Source Han (fontset=sourcehan)
-
-Install [Source Han Serif](https://github.com/adobe-fonts/source-han-serif) and [Source Han Sans](https://github.com/adobe-fonts/source-han-sans) from Adobe.
-
-```latex
-\documentclass[fontset=sourcehan]{jnuthesis}
-```
-
----
-
-## 🔍 Verifying Available Fonts / 检查可用字体
-
-```bash
-# List all Chinese fonts on your system
 fc-list :lang=zh family | sort -u
-
-# Check for specific fonts
-fc-list | grep -i "simsun\|simhei\|songti\|heiti"
+fc-match "Songti SC"
+fc-match "Noto Serif CJK SC"
 ```
 
----
+注意：Word 中的“宋体加粗”通常是宋体伪粗，不等于黑体。模板已经为宋体配置 `AutoFakeBold`，正文里的 `\textbf{...}` 会尽量模拟 Word 的宋体加粗效果。
 
-## 📐 Important: 宋体 Bold ≠ 黑体 / Songti Bold ≠ Heiti
+## English
 
-In the Word template:
-- **宋体加粗** = SimSun with artificial bold (AutoFakeBold) 
-- **黑体** = SimHei (a completely different font)
+The official Word template mainly relies on SimSun, SimHei, and Times New Roman. For the closest LaTeX output, Chinese font selection matters most.
 
-All `fontset` options in this template use `AutoFakeBold` for the body font (songti/宋体). This means `\textbf{text}` in body text produces **faux-bold 宋体**, not 黑体 — matching Word behavior exactly.
+### Recommended Settings
 
-To use 黑体 (for headings), use the `\heiti` command explicitly:
+| Scenario | Class option | Notes |
+| --- | --- | --- |
+| Windows local build | `fontset=windows` | Uses system SimSun/SimHei |
+| TeXPage / Overleaf / macOS / Linux | `fontset=bundled` | Loads font files from this directory; best for final drafts |
+| macOS draft | `fontset=mac` | Uses Songti SC/Heiti SC |
+| Zero-config draft | `fontset=auto` or `fontset=fandol` | Prioritizes successful builds, not exact Word matching |
+
+### Bundled Fonts
+
+Copy these files from `C:\Windows\Fonts\` into this directory:
+
+```text
+fonts/
+├── README.md
+├── simsun.ttc
+├── simhei.ttf
+├── simkai.ttf
+└── simfang.ttf
+```
+
+Then use:
 
 ```latex
-这是宋体正文。\textbf{这是宋体加粗（AutoFakeBold）。}
-{\heiti 这是黑体（用于标题）。}
+\documentclass[numbering=arabic,fontset=bundled]{jnuthesis}
 ```
+
+Word's bold SimSun is usually faux-bold SimSun, not SimHei. This class uses `AutoFakeBold` for the body CJK font to better match Word behavior.

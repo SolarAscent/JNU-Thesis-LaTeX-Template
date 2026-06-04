@@ -12,11 +12,11 @@
 %% Class options:
 %%   numbering=arabic  — 1, 1.1, 1.1.1 (default, matches Word TOC)
 %%   numbering=chinese — 一、(一)、1、(1)
-%%   fontset=fandol|mac|windows|ubuntu|sourcehan
+%%   fontset=auto|fandol|mac|windows|bundled|ubuntu|sourcehan
 %%   toc-depth=4       — include subsubsection in TOC
 %%
 
-\documentclass[numbering=arabic,fontset=fandol]{jnuthesis}
+\documentclass[numbering=arabic,fontset=auto]{jnuthesis}
 
 %% ============================================================================
 %%  METADATA — fill in your information
@@ -33,7 +33,8 @@
 \xuehao{2024000000}
 \daoshi{指导教师姓名}
 
-\thesisdate{2026}{6}{4}
+% Leave the date blank to match the official cover placeholders, or uncomment:
+% \thesisdate{2026}{6}{4}
 
 %% ============================================================================
 %%  BIBLIOGRAPHY
@@ -329,6 +330,7 @@ The English abstract should be consistent with the Chinese abstract, grammatical
 \end{enumerate}
 
 % Acknowledgments (致谢)
+\backmatter
 \chapter{致谢}
 
 在毕业论文完成之际，谨向所有给予我指导、帮助和支持的老师、同学和家人表示衷心的感谢。

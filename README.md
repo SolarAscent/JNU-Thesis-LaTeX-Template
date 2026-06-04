@@ -1,474 +1,304 @@
-# 🎓 暨南大学本科毕业论文 LaTeX 模板
-
-# Jinan University Undergraduate Thesis LaTeX Template
+# JNU Thesis LaTeX Template
 
 <div align="center">
 
-**[English](#english)** | **[中文](#chinese)**
+暨南大学本科毕业论文 LaTeX 模板
 
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)]()
-[![LaTeX](https://img.shields.io/badge/LaTeX-XeLaTeX%20%7C%20LuaLaTeX-blue)]()
-[![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-v1.0-brightgreen)]()
-[![JNU](https://img.shields.io/badge/JNU-Undergraduate%20Thesis-important)]()
+[中文](#中文) · [English](#english)
 
-**The official LaTeX template for Jinan University undergraduate theses — matching the 2026 Word template specifications exactly.**
+[![XeLaTeX](https://img.shields.io/badge/compiler-XeLaTeX-126f9a)](#本地编译)
+[![GB/T 7714](https://img.shields.io/badge/bibliography-GB%2FT%207714--2015-444)](#参考文献)
+[![License](https://img.shields.io/badge/license-GPL--3.0-blue)](LICENSE)
 
 </div>
 
 ---
 
-## 📖 English
+## 中文
 
-### ⚡ Quick Start
+这是基于暨南大学 2026 版官方 Word 毕业论文模板重做的本科毕业论文 LaTeX 模板。模板把官方封面 `.docx` 与正文 `.dot` 的要求合并到 `jnuthesis.cls`，重点修正封面、前置页、字体、页边距、行距、目录、参考文献和附录结构。
+
+### 快速开始
 
 ```bash
-# 1. Clone this repository
 git clone https://github.com/SolarAscent/JNU-Thesis-LaTeX-Template.git
-cd JNUThesisTemplate
-
-# 2. Edit your metadata in jnuthesis.tex
-#    - Title, name, student ID, advisor, etc.
-
-# 3. Compile
-latexmk -pdf -xelatex jnuthesis
+cd JNU-Thesis-LaTeX-Template
+latexmk -xelatex jnuthesis.tex
 ```
 
-That's it! Your PDF is ready at `jnuthesis.pdf`.
+生成文件在 `jnuthesis.pdf`。如果你在 macOS、Windows 或 TeXPage 上使用，建议先阅读下面的字体说明。
 
-### 🚀 Usage Options
+### 文件结构
 
-#### Option 1: ☁️ TeXPage (Zero Installation)
+```text
+jnuthesis.cls       文档类：封面、页面、标题、目录、参考文献格式
+jnuthesis.tex       示例主文件：填写个人信息并写正文
+refs.bib           BibLaTeX 参考文献数据库
+figs/              官方封面校徽与校名字图
+fonts/README.md    宋体/黑体等字体配置说明
+latexmkrc          本地 latexmk 配置
+.github/workflows  GitHub Actions 编译检查
+```
 
-1. Go to [TeXPage](https://www.texpage.com)
-2. Create a new project → Upload from ZIP
-3. Upload this entire template folder as a ZIP
-4. Set compiler to **XeLaTeX**
-5. Click **Compile** — done!
+### 填写信息
 
-#### Option 2: 📦 Overleaf
+在 `jnuthesis.tex` 顶部修改：
 
-1. Go to [Overleaf](https://www.overleaf.com)
-2. New Project → Upload Project
-3. Upload this entire folder as a ZIP
-4. Set Menu → Compiler → **XeLaTeX**
-5. Click **Recompile**
+```latex
+\biaoti{你的中文论文题目}
+\entitle{Your English Thesis Title}
+\xueyuan{学院名称}
+\xuexi{学系名称}
+\zhuanye{专业名称}
+\xingming{姓名}
+\xuehao{学号}
+\daoshi{指导教师}
+% \thesisdate{2026}{6}{4}
+```
 
-#### Option 3: 💻 Local Compilation
+官方封面日期默认留空；如果需要自动填入日期，取消 `\thesisdate` 前面的注释。
 
-**Prerequisites:**
+### 编译方式
 
-| OS | Required Packages |
-|----|------------------|
-| macOS | MacTeX ([tug.org/mactex](https://tug.org/mactex)) |
-| Windows | TeX Live or MiKTeX + [fonts](fonts/README.md) |
-| Ubuntu/Debian | `sudo apt-get install texlive-full fonts-noto-cjk` |
-| Arch | `sudo pacman -S texlive-most noto-fonts-cjk` |
+#### TeXPage
 
-**Compile:**
+1. 打开 [TeXPage](https://www.texpage.com)。
+2. 新建项目并上传本仓库 ZIP。
+3. 编译器选择 `XeLaTeX`。
+4. 若要获得最接近 Word 的字体效果，把 Windows 字体文件放入 `fonts/`，并将主文件改为：
+
+```latex
+\documentclass[numbering=arabic,fontset=bundled]{jnuthesis}
+```
+
+#### 本地编译
+
+推荐安装完整 TeX Live 或 MacTeX：
 
 ```bash
-# Single-pass (recommended)
-latexmk -pdf -xelatex jnuthesis
+latexmk -xelatex jnuthesis.tex
+```
 
-# Or manual:
+手动编译：
+
+```bash
 xelatex jnuthesis
 biber jnuthesis
 xelatex jnuthesis
 xelatex jnuthesis
 ```
 
-### 📝 Document Structure
+#### Overleaf
 
-```
-jnuthesis.tex          ← Main file (edit your metadata here)
-├── Chapters/
-│   ├── 01-Introduction.tex
-│   ├── 02-Chapter.tex
-│   ├── 03-Methodology.tex
-│   ├── 04-Experiments.tex
-│   ├── 05-Conclusion.tex
-│   ├── Appendix-A.tex
-│   ├── Appendix-B.tex
-│   └── Acknowledgments.tex
-├── figs/
-│   ├── jnu-logo.png   ← University logo
-│   └── jnu-name.png   ← University name calligraphy
-├── fonts/
-│   └── README.md      ← Font installation guide
-└── refs.bib           ← Bibliography file
-```
+上传整个项目，菜单中把 Compiler 改为 `XeLaTeX`。如需官方字体效果，请上传 `simsun.ttc`、`simhei.ttf`、`simkai.ttf`、`simfang.ttf` 到 `fonts/` 并使用 `fontset=bundled`。
 
-### ⚙️ Class Options
+### 字体选择
 
-| Option | Values | Default | Description |
-|--------|--------|---------|-------------|
-| `numbering` | `chinese`, `arabic` | `chinese` | Heading numbering: 一/(一)/1… or 1/1.1/1.1.1 |
-| `fontset` | `fandol`, `windows`, `bundled`, `mac`, `ubuntu`, `sourcehan` | `fandol` | CJK font configuration (see [Font Guide](fonts/README.md)) |
-| `toc-depth` | `3`, `4` | `3` | Table of contents depth |
-| `draft` | — | — | Fast draft mode |
+| 选项 | 适用场景 | 说明 |
+| --- | --- | --- |
+| `fontset=windows` | Windows 本地 | 使用系统自带 SimSun/SimHei，最接近官方 Word |
+| `fontset=bundled` | TeXPage/Overleaf/任意系统 | 从 `fonts/` 加载中易字体，推荐最终稿 |
+| `fontset=mac` | macOS 本地 | 使用 Songti SC/Heiti SC，接近但不完全相同 |
+| `fontset=auto` | 默认草稿 | 自动选择可用字体，优先保证能编译 |
+| `fontset=fandol` | 纯 TeX Live 草稿 | 零配置，但外观和宋体/黑体有差异 |
 
-**Example:**
+最终提交前，如果学校严格检查字体，建议使用 `fontset=windows` 或 `fontset=bundled`。字体文件放置方法见 [fonts/README.md](fonts/README.md)。
+
+### 常用命令
 
 ```latex
-\documentclass[numbering=arabic,fontset=mac]{jnuthesis}
-```
+\makecover
+\makestatement
 
-### 📋 Available Commands
-
-#### Metadata
-
-```latex
-\biaoti{中文论文题目}        % Chinese thesis title
-\entitle{English Title}       % English thesis title
-\xueyuan{XX学院}              % College/School
-\xuexi{XX学系}               % Department
-\zhuanye{XX专业}             % Major
-\xingming{姓名}               % Student name
-\xuehao{2024000000}           % Student ID
-\daoshi{指导教师}             % Advisor
-\thesisdate{2026}{6}{4}       % Defense date
-```
-
-#### Front Matter
-
-```latex
-\makecover                    % Generate cover page
-\makestatement                % Generate academic honesty statement
-\begin{zhabstract}...\end{zhabstract}   % Chinese abstract
-\begin{enabstract}...\end{enabstract}   % English abstract
-\tableofcontents              % Table of contents
-```
-
-#### Abstracts
-
-```latex
 \begin{zhabstract}
-  摘要内容...
-
-  \zhaiyao{关键词1；关键词2；关键词3}
+中文摘要正文。
+\zhaiyao{关键词1；关键词2；关键词3}
 \end{zhabstract}
 
 \begin{enabstract}
-  Abstract content...
-
-  \enkeywords{Keyword1; Keyword2; Keyword3}
+English abstract.
+\enkeywords{Keyword1; Keyword2; Keyword3}
 \end{enabstract}
+
+\tableofcontents
+\printbibliography[title={参考文献}]
 ```
 
-#### Citations
+### 参考文献
+
+模板使用 `biblatex` 与 `biblatex-gb7714-2015`：
 
 ```latex
-\upcite{ref-key}              % Superscript citation [1]
+\addbibresource{refs.bib}
 ```
 
-### 📚 Bibliography
+正文引用：
 
-Uses **biblatex** with GB/T 7714-2015 (Chinese national standard for bibliographic references).
-
-Add references to `refs.bib`:
-
-```bibtex
-@article{example,
-  author  = {作者1 and 作者2},
-  title   = {论文题目},
-  journal = {期刊名},
-  year    = {2025},
-  volume  = {45},
-  number  = {3},
-  pages   = {100--110},
-}
+```latex
+\supercite{ref-example-1}
+\upcite{ref-example-2}
 ```
 
-### 📄 Exporting
+### 导出 PDF 和 Word
 
-#### Export to PDF (Built-in)
+PDF 是推荐的最终提交格式：
 
 ```bash
-latexmk -pdf -xelatex jnuthesis
+latexmk -xelatex jnuthesis.tex
 ```
 
-#### Export to Word (.docx)
-
-Using [pandoc](https://pandoc.org):
+导出 Word 可以使用 Pandoc，但复杂 LaTeX 宏、封面和参考文献格式不一定能 100% 保留：
 
 ```bash
-# Install pandoc first: brew install pandoc (macOS) / apt-get install pandoc (Linux)
-
-# Basic conversion
-pandoc jnuthesis.tex -o thesis.docx --pdf-engine=xelatex
-
-# With bibliography
 pandoc jnuthesis.tex -o thesis.docx \
   --pdf-engine=xelatex \
   --bibliography=refs.bib \
-  --citeproc \
-  --reference-doc=reference.docx
+  --citeproc
 ```
 
-> ⚠️ **Note:** Pandoc conversion may not perfectly preserve all LaTeX formatting. For final submission, please verify the output against the Word template.
+如果学院要求提交 Word，建议把 LaTeX 生成的 PDF 作为最终排版依据，再对 Pandoc 生成的 Word 逐页复核。
 
-### 🔧 Troubleshooting
+### 常见问题
 
-| Problem | Solution |
-|---------|----------|
-| **Font not found** | Install fonts per [fonts/README.md](fonts/README.md) or use `fontset=fandol` |
-| **"biblatex.sty not found"** | Install TeX Live full: `sudo apt-get install texlive-full` |
-| **Chinese characters not showing** | Ensure compiler is **XeLaTeX** (not pdfLaTeX) |
-| **Page margins wrong** | Check your TeX distribution is up to date |
+| 问题 | 处理 |
+| --- | --- |
+| 中文不显示 | 确认使用 `XeLaTeX`，不要用 `pdfLaTeX` |
+| 字体和 Word 不像 | 使用 `fontset=windows` 或 `fontset=bundled` |
+| 参考文献不出现 | 运行 `biber jnuthesis`，或直接用 `latexmk -xelatex` |
+| TeXPage 找不到字体 | 上传字体文件到 `fonts/` 并使用 `fontset=bundled` |
+| Word 导出格式漂移 | Pandoc 无法完全复刻 LaTeX 排版，最终以 PDF 为准 |
 
-### 📄 License
+### 致谢
 
-This template is licensed under the [GNU General Public License v3.0](LICENSE).
+本项目继承并重写了旧版暨南大学论文 LaTeX 模板的思路，感谢早期模板作者与维护者：
 
-### 🙏 Credits
-
-- Original LaTeX template (2018) by **Jianrui Lyu** (lvjr@163.com) — [lvjr.bitbucket.io/jnuthesis.html](https://lvjr.bitbucket.io/jnuthesis.html)
-- Legacy template maintained by **SolarAscent** (2023) — [github.com/SolarAscent/JNUThesisTemplate](https://github.com/SolarAscent/JNUThesisTemplate) *(superseded by this template)*
-- This v1.0 template: rewritten from scratch based on the 2026 official JNU Word thesis template, with significant architectural improvements including biblatex/GB7714 support, build automation, cross-platform font configuration, and CI/CD
+- Jianrui Lyu 的旧版 `jnuthesis`
+- SolarAscent/JNUThesisTemplate 旧仓库
+- 暨南大学 2026 版官方 Word 模板
 
 ---
 
-## 📖 中文
+## English
 
-### ⚡ 快速开始
+This repository provides a LaTeX template for Jinan University undergraduate theses, rebuilt from the 2026 official Word templates. It merges the official cover `.docx` and body `.dot` requirements into `jnuthesis.cls`, with corrected cover layout, front matter, fonts, page margins, line spacing, table of contents, bibliography, and appendix handling.
+
+### Quick Start
 
 ```bash
-# 1. 克隆本仓库
 git clone https://github.com/SolarAscent/JNU-Thesis-LaTeX-Template.git
-cd JNUThesisTemplate
-
-# 2. 在 jnuthesis.tex 中填写你的信息
-#    - 论文题目、姓名、学号、指导教师等
-
-# 3. 编译
-latexmk -pdf -xelatex jnuthesis
+cd JNU-Thesis-LaTeX-Template
+latexmk -xelatex jnuthesis.tex
 ```
 
-完成！你的 PDF 已生成在 `jnuthesis.pdf`。
+The output is `jnuthesis.pdf`.
 
-### 🚀 使用方式
+### Project Layout
 
-#### 方式一：☁️ TeXPage（无需安装）
+```text
+jnuthesis.cls       Document class
+jnuthesis.tex       Example main file
+refs.bib           BibLaTeX bibliography database
+figs/              Official cover logo/name images
+fonts/README.md    Font setup guide
+latexmkrc          latexmk configuration
+.github/workflows  GitHub Actions build check
+```
 
-1. 访问 [TeXPage](https://www.texpage.com)
-2. 创建新项目 → 上传 ZIP
-3. 将整个模板文件夹打包为 ZIP 上传
-4. 编译器选择 **XeLaTeX**
-5. 点击 **编译** — 完成！
+### Metadata
 
-#### 方式二：📦 Overleaf
+Edit the metadata near the top of `jnuthesis.tex`:
 
-1. 访问 [Overleaf](https://www.overleaf.com)
-2. 新建项目 → 上传项目
-3. 将整个文件夹打包为 ZIP 上传
-4. 菜单 → 编译器 → 选择 **XeLaTeX**
-5. 点击 **重新编译**
+```latex
+\biaoti{Chinese thesis title}
+\entitle{English thesis title}
+\xueyuan{College}
+\xuexi{Department}
+\zhuanye{Major}
+\xingming{Name}
+\xuehao{Student ID}
+\daoshi{Advisor}
+% \thesisdate{2026}{6}{4}
+```
 
-#### 方式三：💻 本地编译
+The official cover leaves the date blank by default. Uncomment `\thesisdate` if you want numbers on the cover.
 
-**环境准备：**
+### Build Options
 
-| 操作系统 | 所需安装 |
-|---------|---------|
-| macOS | MacTeX ([tug.org/mactex](https://tug.org/mactex)) |
-| Windows | TeX Live 或 MiKTeX + [字体配置](fonts/README.md) |
-| Ubuntu/Debian | `sudo apt-get install texlive-full fonts-noto-cjk` |
-| Arch Linux | `sudo pacman -S texlive-most noto-fonts-cjk` |
+#### TeXPage
 
-**编译命令：**
+1. Open [TeXPage](https://www.texpage.com).
+2. Create a project and upload this repository as a ZIP.
+3. Set the compiler to `XeLaTeX`.
+4. For Word-like fonts, upload the Windows font files into `fonts/` and use:
+
+```latex
+\documentclass[numbering=arabic,fontset=bundled]{jnuthesis}
+```
+
+#### Local Build
+
+Install TeX Live or MacTeX, then run:
 
 ```bash
-# 一键编译（推荐）
-latexmk -pdf -xelatex jnuthesis
+latexmk -xelatex jnuthesis.tex
+```
 
-# 或分步编译：
+Manual build:
+
+```bash
 xelatex jnuthesis
 biber jnuthesis
 xelatex jnuthesis
 xelatex jnuthesis
 ```
 
-### 📝 文档结构
+#### Overleaf
 
-```
-jnuthesis.tex          ← 主文件（在此填写元数据）
-├── Chapters/
-│   ├── 01-Introduction.tex   ← 绪论
-│   ├── 02-Chapter.tex        ← 正文示例
-│   ├── 03-Methodology.tex    ← 方法设计
-│   ├── 04-Experiments.tex    ← 实验与评估
-│   ├── 05-Conclusion.tex     ← 结论与展望
-│   ├── Appendix-A.tex        ← 附录A
-│   ├── Appendix-B.tex        ← 附录B
-│   └── Acknowledgments.tex   ← 致谢
-├── figs/
-│   ├── jnu-logo.png   ← 暨南大学校徽
-│   └── jnu-name.png   ← 暨南大学校名
-├── fonts/
-│   └── README.md      ← 字体安装指南
-└── refs.bib           ← 参考文献文件
-```
+Upload the full project and set Compiler to `XeLaTeX`. For the closest official font match, upload `simsun.ttc`, `simhei.ttf`, `simkai.ttf`, and `simfang.ttf` into `fonts/`, then use `fontset=bundled`.
 
-### ⚙️ 文档类选项
+### Font Sets
 
-| 选项 | 可选值 | 默认值 | 说明 |
-|------|--------|--------|------|
-| `numbering` | `chinese`, `arabic` | `chinese` | 章节编号方案：一/(一)/1… 或 1/1.1/1.1.1 |
-| `fontset` | `fandol`, `windows`, `bundled`, `mac`, `ubuntu`, `sourcehan` | `fandol` | 中文字体配置（详见[字体指南](fonts/README.md)） |
-| `toc-depth` | `3`, `4` | `3` | 目录深度 |
-| `draft` | — | — | 草稿模式（快速编译） |
+| Option | Best for | Notes |
+| --- | --- | --- |
+| `fontset=windows` | Windows local builds | Uses system SimSun/SimHei |
+| `fontset=bundled` | TeXPage/Overleaf/any OS | Loads Zhongyi fonts from `fonts/`; recommended for final drafts |
+| `fontset=mac` | macOS local builds | Uses Songti SC/Heiti SC; close but not identical |
+| `fontset=auto` | Drafting | Chooses available fonts and prioritizes successful builds |
+| `fontset=fandol` | TeX Live fallback | Zero setup, but visually different |
 
-**示例：**
+For strict formatting checks, use `fontset=windows` or `fontset=bundled`.
 
-```latex
-\documentclass[numbering=chinese,fontset=windows]{jnuthesis}
-```
+### PDF and Word Export
 
-### 📋 可用命令
-
-#### 元数据
-
-```latex
-\biaoti{中文论文题目}        % 中文论文标题
-\entitle{English Title}       % 英文论文标题
-\xueyuan{XX学院}              % 学院
-\xuexi{XX学系}               % 学系
-\zhuanye{XX专业}             % 专业
-\xingming{姓名}               % 姓名
-\xuehao{2024000000}           % 学号
-\daoshi{指导教师}             % 指导教师
-\thesisdate{2026}{6}{4}       % 答辩日期
-```
-
-#### 前置部分
-
-```latex
-\makecover                    % 生成封面
-\makestatement                % 生成诚信声明
-\begin{zhabstract}...\end{zhabstract}   % 中文摘要
-\begin{enabstract}...\end{enabstract}   % 英文摘要
-\tableofcontents              % 目录
-```
-
-#### 摘要
-
-```latex
-\begin{zhabstract}
-  摘要内容（一般不超过300字）...
-
-  \zhaiyao{关键词1；关键词2；关键词3}
-\end{zhabstract}
-
-\begin{enabstract}
-  Abstract content...
-
-  \enkeywords{Keyword1; Keyword2; Keyword3}
-\end{enabstract}
-```
-
-#### 引用
-
-```latex
-\upcite{ref-key}              % 上标引用 [1]
-```
-
-### 📚 参考文献
-
-使用 **biblatex** 配合 GB/T 7714-2015 国家标准。
-
-在 `refs.bib` 中添加参考文献条目：
-
-```bibtex
-@article{example,
-  author  = {作者1 and 作者2},
-  title   = {论文题目},
-  journal = {期刊名},
-  year    = {2025},
-  volume  = {45},
-  number  = {3},
-  pages   = {100--110},
-}
-```
-
-### 📄 格式转换
-
-#### 导出为 PDF（内置）
+PDF is the recommended final output:
 
 ```bash
-latexmk -pdf -xelatex jnuthesis
+latexmk -xelatex jnuthesis.tex
 ```
 
-#### 导出为 Word (.docx)
-
-使用 [pandoc](https://pandoc.org)：
+Word export is possible with Pandoc, but complex LaTeX layout may not survive perfectly:
 
 ```bash
-# 安装 pandoc：
-# macOS: brew install pandoc
-# Ubuntu: sudo apt-get install pandoc
-
-# 基本转换
-pandoc jnuthesis.tex -o thesis.docx --pdf-engine=xelatex
-
-# 包含参考文献
 pandoc jnuthesis.tex -o thesis.docx \
   --pdf-engine=xelatex \
   --bibliography=refs.bib \
-  --citeproc \
-  --reference-doc=reference.docx
+  --citeproc
 ```
 
-> ⚠️ **注意：** Pandoc 转换可能无法完全保留所有 LaTeX 格式。最终提交前请仔细核对输出是否符合学校 Word 模板要求。
+If your department requires Word, use the PDF as the formatting reference and manually review the generated `.docx`.
 
-### 🔧 常见问题
+### Troubleshooting
 
-| 问题 | 解决方法 |
-|------|---------|
-| **找不到字体** | 按 [fonts/README.md](fonts/README.md) 安装字体，或使用 `fontset=fandol` |
-| **找不到 biblatex.sty** | 安装完整 TeX Live：`sudo apt-get install texlive-full` |
-| **中文不显示** | 确保编译器为 **XeLaTeX**（而非 pdfLaTeX） |
-| **页边距不对** | 确保 TeX 发行版为最新版本 |
-| **参考文献不显示** | 确保运行了 biber：`biber jnuthesis` 后重新编译 |
+| Problem | Fix |
+| --- | --- |
+| Chinese text missing | Use `XeLaTeX`, not `pdfLaTeX` |
+| Font does not match Word | Use `fontset=windows` or `fontset=bundled` |
+| Bibliography missing | Run `biber`, or use `latexmk -xelatex` |
+| TeXPage cannot find fonts | Upload fonts into `fonts/` and use `fontset=bundled` |
+| Word export drifts | Pandoc cannot fully preserve all LaTeX layout; verify manually |
 
-### 🎯 格式对照
+### Credits
 
-本模板严格按照暨南大学2026版Word毕业论文模板制作，确保以下格式完全一致：
-
-| 项目 | 规格 |
-|------|------|
-| 纸张 | A4 (210mm × 297mm) |
-| 页边距 | 上/下 25.4mm，左/右 31.75mm |
-| 正文字体 | 宋体，四号 (14pt) |
-| 标题字体 | 黑体 |
-| 英文字体 | Times New Roman |
-| 一级标题 | 小三号 (15pt) 黑体加粗 |
-| 二级标题 | 四号 (14pt) 黑体加粗 |
-| 三级标题 | 四号 (14pt) 黑体 |
-| 页眉 | 小五号 (9pt) 宋体 |
-| 页码 | 小四号 (12pt) |
-| 行距 | 单倍行距 |
-| 首行缩进 | 2字符 |
-| 参考文献格式 | GB/T 7714-2015 |
-
-### 📄 许可证
-
-本模板基于 [GNU General Public License v3.0](LICENSE) 协议发布。
-
-### 🙏 致谢
-
-- 原始 LaTeX 模板 (2018) 由 **吕荐瑞** 老师制作 — [lvjr.bitbucket.io/jnuthesis.html](https://lvjr.bitbucket.io/jnuthesis.html)
-- 旧版模板由 **SolarAscent** (2023) 维护 — [github.com/SolarAscent/JNUThesisTemplate](https://github.com/SolarAscent/JNUThesisTemplate) *（已由本模板取代）*
-- 本 v1.0 模板：基于2026版暨南大学官方Word毕业论文模板从零重新开发，在架构上进行了重大改进，包括 biblatex/GB7714 支持、自动化构建、跨平台字体配置和 CI/CD
-
----
-
-<div align="center">
-
-**⭐ If this template helps you, please give it a star!**
-
-**如果本模板对你有帮助，请点个 Star ⭐**
-
-*Made with ❤️ for JNU students*
-
-</div>
+- Jianrui Lyu's original `jnuthesis`
+- The legacy SolarAscent/JNUThesisTemplate repository
+- Jinan University's 2026 official Word thesis templates

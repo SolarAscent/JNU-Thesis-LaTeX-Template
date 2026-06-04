@@ -40,16 +40,40 @@
 %       ctex default maps SimSun BoldFont→SimHei which is WRONG for body text.
 %       We use AutoFakeBold for SimSun to match Word behavior exactly.
 
-\def\jnu@fontset@load{%
-  % Default: fandol (bundled with TeX Live, cross-platform)
-  \setCJKmainfont{FandolSong-Regular.otf}[AutoFakeBold=2.5]%
-  \setCJKsansfont{FandolHei-Regular.otf}[AutoFakeBold=2.5]%
-  \setCJKmonofont{FandolFang-Regular.otf}%
-  \setCJKfamilyfont{zhsong}{FandolSong-Regular.otf}[AutoFakeBold=2.5]%
-  \setCJKfamilyfont{zhhei}{FandolHei-Regular.otf}[AutoFakeBold=2.5]%
-  \setCJKfamilyfont{zhkai}{FandolKai-Regular.otf}%
-  \setCJKfamilyfont{zhfs}{FandolFang-Regular.otf}%
+\def\jnu@fontset@load{\jnu@fontset@auto}
+
+% --- Auto: choose the closest locally available Word-compatible font set ---
+\newcommand{\jnu@fontset@auto}{%
+  \IfFontExistsTF{Songti SC}{%
+    \setCJKmainfont{Songti SC}[AutoFakeBold=2.5]%
+    \setCJKsansfont{Heiti SC}%
+    \setCJKmonofont{STFangsong}%
+    \setCJKfamilyfont{zhsong}{Songti SC}[AutoFakeBold=2.5]%
+    \setCJKfamilyfont{zhhei}{Heiti SC}%
+    \setCJKfamilyfont{zhkai}{Kaiti SC}%
+    \setCJKfamilyfont{zhfs}{STFangsong}%
+  }{%
+    \IfFontExistsTF{Noto Serif CJK SC}{%
+      \setCJKmainfont{Noto Serif CJK SC}[AutoFakeBold=2.5]%
+      \setCJKsansfont{Noto Sans CJK SC}%
+      \setCJKmonofont{Noto Sans CJK SC}%
+      \setCJKfamilyfont{zhsong}{Noto Serif CJK SC}[AutoFakeBold=2.5]%
+      \setCJKfamilyfont{zhhei}{Noto Sans CJK SC}%
+      \setCJKfamilyfont{zhkai}{Noto Serif CJK SC}%
+      \setCJKfamilyfont{zhfs}{Noto Serif CJK SC}%
+    }{%
+      \setCJKmainfont{FandolSong-Regular.otf}[AutoFakeBold=2.5]%
+      \setCJKsansfont{FandolHei-Regular.otf}[AutoFakeBold=2.5]%
+      \setCJKmonofont{FandolFang-Regular.otf}%
+      \setCJKfamilyfont{zhsong}{FandolSong-Regular.otf}[AutoFakeBold=2.5]%
+      \setCJKfamilyfont{zhhei}{FandolHei-Regular.otf}[AutoFakeBold=2.5]%
+      \setCJKfamilyfont{zhkai}{FandolKai-Regular.otf}%
+      \setCJKfamilyfont{zhfs}{FandolFang-Regular.otf}%
+    }%
+  }%
 }
+
+\DeclareOption{fontset=auto}{\def\jnu@fontset@load{\jnu@fontset@auto}}
 
 % --- Fandol: TeX Live default (works everywhere, looks different from Word) ---
 \DeclareOption{fontset=fandol}{%
@@ -221,17 +245,18 @@
 %   sz=21 → 10.5pt (五号) : TOC subsections, captions
 %   sz=18 → 9pt (小五号)  : header
 
-\newcommand{\sizecover}{\fontsize{36pt}{48pt}\selectfont}     % 小初号
+\newcommand{\sizecover}{\fontsize{36pt}{44pt}\selectfont}     % 小初号
 \newcommand{\sizestatement}{\fontsize{22pt}{28pt}\selectfont}  % 二号
 \newcommand{\sizetitle}{\fontsize{18pt}{24pt}\selectfont}      % 小二号
-\newcommand{\sizechap}{\fontsize{15pt}{22pt}\selectfont}       % 小三号
-\newcommand{\sizebody}{\fontsize{14pt}{22pt}\selectfont}       % 四号
+\newcommand{\sizechap}{\fontsize{15pt}{20pt}\selectfont}       % 小三号
+\newcommand{\sizefront}{\fontsize{15pt}{21pt}\selectfont}      % 小三号正文
+\newcommand{\sizebody}{\fontsize{14pt}{20pt}\selectfont}       % 四号
 \newcommand{\sizetocsec}{\fontsize{12pt}{18pt}\selectfont}     % 小四号
 \newcommand{\sizecaption}{\fontsize{10.5pt}{15pt}\selectfont}  % 五号
 \newcommand{\sizeheader}{\fontsize{9pt}{12pt}\selectfont}      % 小五号
 
 % Ensure body starts at 四号 (14pt) 宋体
-\AtBeginDocument{\zihao{4}\songti\setstretch{1.15}}
+\AtBeginDocument{\zihao{4}\songti\setstretch{1}}
 
 %% ============================================================================
 %%  Paragraph spacing
@@ -263,10 +288,10 @@
   \renewcommand{\footrulewidth}{0pt}%
 }
 
-\pagestyle{jnu-main}
+\pagestyle{jnu-empty}
 
-% Chapter first page uses plain style
-\ctexset{chapter/pagestyle=jnu-plain}
+% Official Word pages keep the running header on chapter-opening pages.
+\ctexset{chapter/pagestyle=jnu-main}
 
 %% ============================================================================
 %%  Heading formatting (matching Word template)
@@ -276,20 +301,20 @@
 \ctexset{
   chapter/name = {,},
   chapter/number = \arabic{chapter},
-  chapter/format = \sizechap\songti\bfseries\centering,
+  chapter/format = \sizechap\heiti\bfseries\raggedright,
   chapter/beforeskip = 6pt,
   chapter/afterskip = 6pt,
   chapter/aftername = \quad,
   %
   section/name = {,},
-  section/format = \sizebody\songti\bfseries\raggedright,
+  section/format = \sizebody\heiti\bfseries\raggedright,
   section/beforeskip = 3pt,
   section/afterskip = 3pt,
   section/aftername = \quad,
   section/indent = 0em,
   %
   subsection/name = {,},
-  subsection/format = \sizebody\songti\bfseries\raggedright,
+  subsection/format = \sizebody\heiti\bfseries\raggedright,
   subsection/beforeskip = 3pt,
   subsection/afterskip = 3pt,
   subsection/aftername = \quad,
@@ -350,6 +375,17 @@
   {\hspace*{-2.8em}}
   {\titlerule*[5pt]{$\cdot$}\contentspage}
 
+\renewcommand{\tableofcontents}{%
+  \clearpage
+  \thispagestyle{jnu-empty}%
+  \begin{center}
+    {\sizetitle\songti\bfseries 目\hspace{2em}录}
+  \end{center}
+  \vspace{1em}
+  \@starttoc{toc}%
+  \clearpage
+}
+
 %% ============================================================================
 %%  Captions (table/figure)
 %% ============================================================================
@@ -387,9 +423,9 @@
 \newcommand{\thesisyear}[1]{\gdef\@thesisyear{#1}}
 \newcommand{\thesismonth}[1]{\gdef\@thesismonth{#1}}
 \newcommand{\thesisday}[1]{\gdef\@thesisday{#1}}
-\thesisyear{\the\year}
-\thesismonth{\the\month}
-\thesisday{\the\day}
+\thesisyear{}
+\thesismonth{}
+\thesisday{}
 
 \newcommand{\thesisdate}[3]{\thesisyear{#1}\thesismonth{#2}\thesisday{#3}}
 
@@ -407,78 +443,42 @@
 %%  Cover page  (matching Word 本科毕业论文封面.docx)
 %% ============================================================================
 
+\newcommand{\jnu@coverfield}[3]{%
+  {\sizebody\songti\bfseries\makebox[22mm][s]{#1}}%
+  \hspace{2mm}%
+  {\sizebody\songti\bfseries\CJKunderline{\makebox[#2][c]{#3}}}%
+}
+
 \newcommand{\makecover}{%
   \thispagestyle{jnu-empty}
   \begin{titlepage}
-    \centering
+    \begin{tikzpicture}[remember picture,overlay]
+      \node at ([yshift=-48mm]current page.north) {%
+        \IfFileExists{figs/jnu-logo.png}{\includegraphics[width=35mm]{figs/jnu-logo.png}}{}%
+      };
+      \node at ([yshift=-88mm]current page.north) {%
+        \IfFileExists{figs/jnu-name.png}{\includegraphics[width=116mm]{figs/jnu-name.png}}{}%
+      };
+      \node at ([yshift=-113mm]current page.north) {{\sizecover\heiti 本科生毕业论文}};
 
-    % University name in calligraphy (TOP — matches Word cover)
-    \IfFileExists{figs/jnu-name.png}{%
-      \includegraphics[width=7cm]{figs/jnu-name.png}
-    }{}
-
-    \vspace{1cm}
-
-    % University logo (BELOW the name)
-    \IfFileExists{figs/jnu-logo.png}{%
-      \includegraphics[height=3cm]{figs/jnu-logo.png}
-    }{%
-      \fbox{\parbox{3cm}{\centering\vspace{1.5cm}校徽\\logo\vspace{1.5cm}}}
-    }
-
-    \vspace{1.5cm}
-
-    % "本科生毕业论文" — 小初号(36pt) 黑体
-    {\sizecover\heiti 本科生毕业论文}
-
-    \vspace{2.5cm}
-
-    % Thesis title field
-    \begin{flushleft}
-      \hspace{1.5em}%
-      {\sizetitle\songti\bfseries 论文题目}%
-      \hspace{0.5em}%
-      {\sizetitle\songti\CJKunderline{\makebox[0.55\textwidth]{\hfill\@biaoti\hfill}}}
-    \end{flushleft}
-
-    \vspace{0.8cm}
-
-    % Info fields — two-column layout matching Word cover
-    \begin{flushleft}
-      \sizebody\songti\bfseries
-      \renewcommand{\arraystretch}{2.2}
-      \begin{tabular}{@{}p{2.5cm}p{0.45\textwidth}p{2.5cm}p{0.35\textwidth}@{}}
-        学\hfill 院 &
-        \CJKunderline{\makebox[0.42\textwidth]{\hfill\@xueyuan\hfill}} &
-        学\hfill 系 &
-        \CJKunderline{\makebox[0.32\textwidth]{\hfill\@xuexi\hfill}} \\
-        \\[-0.3cm]
-        专\hfill 业 &
-        \CJKunderline{\makebox[0.42\textwidth]{\hfill\@zhuanye\hfill}} & & \\
-        \\[-0.3cm]
-        姓\hfill 名 &
-        \CJKunderline{\makebox[0.42\textwidth]{\hfill\@xingming\hfill}} &
-        学\hfill 号 &
-        \CJKunderline{\makebox[0.32\textwidth]{\hfill\@xuehao\hfill}} \\
-        \\[-0.3cm]
-        指导教师 &
-        \CJKunderline{\makebox[0.42\textwidth]{\hfill\@daoshi\hfill}} & & \\
-      \end{tabular}
-    \end{flushleft}
-
-    \vspace{2.5cm}
-
-    % Date
-    {\sizebody\songti\bfseries
-     \@thesisyear \hspace{1.5em} 年
-     \hspace{2em} \@thesismonth \hspace{1.5em} 月
-     \hspace{2em} \@thesisday \hspace{1.5em} 日}
-
-    \vfill
-
-    {\sizebody JINAN UNIVERSITY}
-
-    \vspace{0.3cm}
+      \node[anchor=west] at ([xshift=31.75mm,yshift=-151mm]current page.north west)
+        {\jnu@coverfield{论文题目}{121mm}{\@biaoti}};
+      \node[anchor=west] at ([xshift=31.75mm,yshift=-178mm]current page.north west)
+        {\jnu@coverfield{学\hfill 院}{121mm}{\@xueyuan}};
+      \node[anchor=west] at ([xshift=31.75mm,yshift=-191mm]current page.north west)
+        {\jnu@coverfield{学\hfill 系}{121mm}{\@xuexi}};
+      \node[anchor=west] at ([xshift=31.75mm,yshift=-204mm]current page.north west)
+        {\jnu@coverfield{专\hfill 业}{121mm}{\@zhuanye}};
+      \node[anchor=west] at ([xshift=31.75mm,yshift=-218mm]current page.north west)
+        {\jnu@coverfield{姓\hfill 名}{121mm}{\@xingming}};
+      \node[anchor=west] at ([xshift=31.75mm,yshift=-231mm]current page.north west)
+        {\jnu@coverfield{学\hfill 号}{121mm}{\@xuehao}};
+      \node[anchor=west] at ([xshift=31.75mm,yshift=-244mm]current page.north west)
+        {\jnu@coverfield{指导教师}{121mm}{\@daoshi}};
+      \node at ([yshift=-257mm]current page.north)
+        {{\sizebody\songti\bfseries \@thesisyear \hspace{1.8em} 年\hspace{2.4em} \@thesismonth \hspace{1.8em} 月\hspace{2.4em} \@thesisday \hspace{1.8em} 日}};
+    \end{tikzpicture}%
+    \vspace*{\fill}
   \end{titlepage}
   \clearpage
 }
@@ -489,25 +489,26 @@
 
 \newcommand{\makestatement}{%
   \thispagestyle{jnu-empty}
-  \vspace*{2cm}
+  \vspace*{-4mm}
   \begin{center}
     {\sizestatement\songti\bfseries 诚信声明}
   \end{center}
-  \vspace{2cm}
+  \vspace{10mm}
   \par
-  {\sizechap\songti
+  {\sizefront\songti
     我声明，所呈交的毕业论文（设计）是本人在老师指导下进行的研究工作及取得的
     研究成果。除文中已经注明引用的内容外，本论文（设计）不包含任何其他个人或
     集体已经发表或撰写过的作品成果。在论文（设计）撰写过程中，本人严格遵守学
-    术道德和学术规范，恪守学术诚信，对毕业论文（设计）的原创性、真实性负责。
+    术道德和学术规范，恪守学术诚信，坚决杜绝任何形式的抄袭、剽窃、伪造、篡改、
+    买卖、代写毕业论文等学术不端行为，本人自愿承担因违反上述承诺而产生的后果和责任。
   }
-  \vspace{3cm}
+  \vspace{18mm}
   \par
-  {\sizechap\songti
-    签名：\hspace{4.5cm}
-    日期：\hspace{1.5em}\hspace{0.5cm}年\hspace{1.5cm}月\hspace{1.5cm}日
+  {\sizefront\songti
+    签名：\hspace{38mm}
+    日期：\hspace{1.2em}年\hspace{1.2em}月\hspace{1.2em}日
   }
-  \clearpage
+  \vspace{15mm}
 }
 
 %% ============================================================================
@@ -515,14 +516,17 @@
 %% ============================================================================
 
 \newenvironment{zhabstract}{%
-  \chapter*{摘\hspace{2em}要}
-  \addcontentsline{toc}{chapter}{摘要}
-  \thispagestyle{jnu-plain}
+  \thispagestyle{jnu-empty}
+  \begin{center}
+    {\sizetitle\songti\bfseries \@biaoti}
+  \end{center}
+  \vspace{8mm}
   \par
   \sizebody\songti
   \setlength{\parindent}{2em}
+  \noindent{\songti\bfseries [摘\hspace{1em}要]}\hspace{0.5em}
 }{%
-  \par\pagebreak[2]
+  \par
 }
 
 \newcommand{\zhaiyao}[1]{%
@@ -536,14 +540,18 @@
 %% ============================================================================
 
 \newenvironment{enabstract}{%
-  \chapter*{\textbf{Abstract}}
-  \addcontentsline{toc}{chapter}{Abstract}
-  \thispagestyle{jnu-plain}
+  \clearpage
+  \thispagestyle{jnu-empty}
+  \begin{center}
+    {\sizetitle\bfseries \@entitle}
+  \end{center}
+  \vspace{8mm}
   \par
   \sizebody
   \setlength{\parindent}{2em}
+  \noindent{\bfseries Abstract:}\hspace{0.5em}
 }{%
-  \par\pagebreak[2]
+  \par
 }
 
 \newcommand{\enkeywords}[1]{%
@@ -555,6 +563,24 @@
 %% ============================================================================
 %%  Bibliography
 %% ============================================================================
+
+\providecommand{\upcite}[1]{\supercite{#1}}
+\defbibheading{bibliography}[\bibname]{%
+  \chapter*{#1}%
+  \addcontentsline{toc}{chapter}{#1}%
+}
+
+\newif\ifjnu@mainmatter
+\jnu@mainmatterfalse
+\pretocmd{\chapter}{%
+  \ifjnu@mainmatter\else
+    \clearpage
+    \pagenumbering{arabic}%
+    \setcounter{page}{1}%
+    \pagestyle{jnu-main}%
+    \jnu@mainmattertrue
+  \fi
+}{}{}
 
 
 %% ============================================================================
