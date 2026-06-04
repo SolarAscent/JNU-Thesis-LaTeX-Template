@@ -73,6 +73,8 @@ cd JNU-Thesis-LaTeX-Template
 
 封面日期默认留空，和官方封面占位效果一致。需要显示日期时，再取消 `\thesisdate` 的注释。
 
+示例文件默认使用 `\makeblankcover`，打开 PDF 时会先看到官方空白封面表单。正式写论文时，把 [jnuthesis.tex](jnuthesis.tex) 里的 `\makeblankcover` 改成 `\makecover`，上方填写的学院、学系、专业、姓名、学号和导师就会出现在封面横线上。
+
 ### 3. 编译 PDF
 
 ```bash

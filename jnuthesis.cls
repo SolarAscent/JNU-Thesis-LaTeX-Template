@@ -46,10 +46,10 @@
 \newcommand{\jnu@fontset@auto}{%
   \IfFontExistsTF{Songti SC}{%
     \setCJKmainfont{Songti SC}[AutoFakeBold=2.5]%
-    \setCJKsansfont{Heiti SC}%
+    \setCJKsansfont{Heiti SC}[AutoFakeBold=2.5]%
     \setCJKmonofont{STFangsong}%
     \setCJKfamilyfont{zhsong}{Songti SC}[AutoFakeBold=2.5]%
-    \setCJKfamilyfont{zhhei}{Heiti SC}%
+    \setCJKfamilyfont{zhhei}{Heiti SC}[AutoFakeBold=2.5]%
     \setCJKfamilyfont{zhkai}{Kaiti SC}%
     \setCJKfamilyfont{zhfs}{STFangsong}%
   }{%
@@ -105,10 +105,10 @@
 \DeclareOption{fontset=mac}{%
   \def\jnu@fontset@load{%
     \setCJKmainfont{Songti SC}[AutoFakeBold=2.5]%
-    \setCJKsansfont{Heiti SC}%
+    \setCJKsansfont{Heiti SC}[AutoFakeBold=2.5]%
     \setCJKmonofont{STFangsong}%
     \setCJKfamilyfont{zhsong}{Songti SC}[AutoFakeBold=2.5]%
-    \setCJKfamilyfont{zhhei}{Heiti SC}%
+    \setCJKfamilyfont{zhhei}{Heiti SC}[AutoFakeBold=2.5]%
     \setCJKfamilyfont{zhkai}{Kaiti SC}%
     \setCJKfamilyfont{zhfs}{STFangsong}%
   }%
@@ -470,10 +470,10 @@
 \newcommand{\jnu@coverfield}[3]{%
   {\sizebody\songti\bfseries\makebox[22mm][s]{#1}}%
   \hspace{2mm}%
-  {\sizebody\songti\bfseries\CJKunderline{\makebox[#2][c]{#3}}}%
+  {\sizebody\songti\CJKunderline{\makebox[#2][c]{#3}}}%
 }
 
-\newcommand{\makecover}{%
+\newcommand{\jnu@rendercover}{%
   \thispagestyle{jnu-empty}
   \begin{titlepage}
     \begin{tikzpicture}[remember picture,overlay]
@@ -486,24 +486,57 @@
       \node at ([yshift=-113mm]current page.north) {{\sizecover\heiti 本科生毕业论文}};
 
       \node[anchor=west] at ([xshift=31.75mm,yshift=-151mm]current page.north west)
-        {\jnu@coverfield{论文题目}{121mm}{\@biaoti}};
+        {\jnu@coverfield{论文题目}{121mm}{\jnu@cover@biaoti}};
       \node[anchor=west] at ([xshift=31.75mm,yshift=-178mm]current page.north west)
-        {\jnu@coverfield{学\hfill 院}{121mm}{\@xueyuan}};
+        {\jnu@coverfield{学\hfill 院}{121mm}{\jnu@cover@xueyuan}};
       \node[anchor=west] at ([xshift=31.75mm,yshift=-191mm]current page.north west)
-        {\jnu@coverfield{学\hfill 系}{121mm}{\@xuexi}};
+        {\jnu@coverfield{学\hfill 系}{121mm}{\jnu@cover@xuexi}};
       \node[anchor=west] at ([xshift=31.75mm,yshift=-204mm]current page.north west)
-        {\jnu@coverfield{专\hfill 业}{121mm}{\@zhuanye}};
+        {\jnu@coverfield{专\hfill 业}{121mm}{\jnu@cover@zhuanye}};
       \node[anchor=west] at ([xshift=31.75mm,yshift=-218mm]current page.north west)
-        {\jnu@coverfield{姓\hfill 名}{121mm}{\@xingming}};
+        {\jnu@coverfield{姓\hfill 名}{121mm}{\jnu@cover@xingming}};
       \node[anchor=west] at ([xshift=31.75mm,yshift=-231mm]current page.north west)
-        {\jnu@coverfield{学\hfill 号}{121mm}{\@xuehao}};
+        {\jnu@coverfield{学\hfill 号}{121mm}{\jnu@cover@xuehao}};
       \node[anchor=west] at ([xshift=31.75mm,yshift=-244mm]current page.north west)
-        {\jnu@coverfield{指导教师}{121mm}{\@daoshi}};
+        {\jnu@coverfield{指导教师}{121mm}{\jnu@cover@daoshi}};
       \node at ([yshift=-257mm]current page.north)
-        {{\sizebody\songti\bfseries \@thesisyear \hspace{1.8em} 年\hspace{2.4em} \@thesismonth \hspace{1.8em} 月\hspace{2.4em} \@thesisday \hspace{1.8em} 日}};
+        {{\sizebody\songti\bfseries \jnu@cover@year \hspace{1.8em} 年\hspace{2.4em} \jnu@cover@month \hspace{1.8em} 月\hspace{2.4em} \jnu@cover@day \hspace{1.8em} 日}};
     \end{tikzpicture}%
     \vspace*{\fill}
   \end{titlepage}
+}
+
+\newcommand{\makecover}{%
+  \begingroup
+    \let\jnu@cover@biaoti\@biaoti
+    \let\jnu@cover@xueyuan\@xueyuan
+    \let\jnu@cover@xuexi\@xuexi
+    \let\jnu@cover@zhuanye\@zhuanye
+    \let\jnu@cover@xingming\@xingming
+    \let\jnu@cover@xuehao\@xuehao
+    \let\jnu@cover@daoshi\@daoshi
+    \let\jnu@cover@year\@thesisyear
+    \let\jnu@cover@month\@thesismonth
+    \let\jnu@cover@day\@thesisday
+    \jnu@rendercover
+  \endgroup
+  \clearpage
+}
+
+\newcommand{\makeblankcover}{%
+  \begingroup
+    \def\jnu@cover@biaoti{}%
+    \def\jnu@cover@xueyuan{}%
+    \def\jnu@cover@xuexi{}%
+    \def\jnu@cover@zhuanye{}%
+    \def\jnu@cover@xingming{}%
+    \def\jnu@cover@xuehao{}%
+    \def\jnu@cover@daoshi{}%
+    \def\jnu@cover@year{}%
+    \def\jnu@cover@month{}%
+    \def\jnu@cover@day{}%
+    \jnu@rendercover
+  \endgroup
   \clearpage
 }
 

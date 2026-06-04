@@ -73,6 +73,8 @@ Edit the metadata at the top of `jnuthesis.tex`:
 
 The cover date is blank by default, matching the official placeholder style. Uncomment `\thesisdate` if you want the date to appear.
 
+The example source uses `\makeblankcover` by default, so the generated PDF opens with the official blank cover form. For a filled thesis cover, change `\makeblankcover` in [jnuthesis.tex](jnuthesis.tex) back to `\makecover`; the metadata above will then be printed on the cover lines.
+
 ### 3. Build PDF
 
 ```bash
