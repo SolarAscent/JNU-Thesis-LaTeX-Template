@@ -28,17 +28,30 @@
 \DeclareOption{toc-depth=4}{\jnu@toc@deeptrue}
 
 % --- fontset: store choice, apply after LoadClass ---
+%
+% Priority of font matching quality for Word template:
+%   1. fontset=windows → uses system SimSun/SimHei (Word-identical on Windows)
+%   2. fontset=bundled → uses fonts/ directory files (Word-identical on any OS)
+%   3. fontset=mac     → uses Songti SC/Heiti SC (close macOS approximation)
+%   4. fontset=fandol  → cross-platform fallback (different look, always works)
+%
+% NOTE: Word "宋体加粗" = SimSun with fake bold (NOT SimHei).
+%       Word "黑体" = SimHei (a different font, used for headings).
+%       ctex default maps SimSun BoldFont→SimHei which is WRONG for body text.
+%       We use AutoFakeBold for SimSun to match Word behavior exactly.
+
 \def\jnu@fontset@load{%
   % Default: fandol (bundled with TeX Live, cross-platform)
-  \setCJKmainfont{FandolSong-Regular.otf}%
+  \setCJKmainfont{FandolSong-Regular.otf}[AutoFakeBold=2.5]%
   \setCJKsansfont{FandolHei-Regular.otf}[AutoFakeBold=2.5]%
   \setCJKmonofont{FandolFang-Regular.otf}%
-  \setCJKfamilyfont{zhsong}{FandolSong-Regular.otf}%
+  \setCJKfamilyfont{zhsong}{FandolSong-Regular.otf}[AutoFakeBold=2.5]%
   \setCJKfamilyfont{zhhei}{FandolHei-Regular.otf}[AutoFakeBold=2.5]%
   \setCJKfamilyfont{zhkai}{FandolKai-Regular.otf}%
   \setCJKfamilyfont{zhfs}{FandolFang-Regular.otf}%
 }
 
+% --- Fandol: TeX Live default (works everywhere, looks different from Word) ---
 \DeclareOption{fontset=fandol}{%
   \def\jnu@fontset@load{%
     \setCJKmainfont{FandolSong-Regular.otf}[AutoFakeBold=2.5]%
@@ -51,6 +64,7 @@
   }%
 }
 
+% --- Windows: uses actual SimSun/SimHei (Word-identical) ---
 \DeclareOption{fontset=windows}{%
   \def\jnu@fontset@load{%
     \setCJKmainfont{SimSun}[AutoFakeBold=2.5]%
@@ -63,36 +77,54 @@
   }%
 }
 
+% --- macOS: uses Songti SC/Heiti SC (close approximation) ---
 \DeclareOption{fontset=mac}{%
   \def\jnu@fontset@load{%
-    \setCJKmainfont{Songti SC}[BoldFont=Heiti SC]%
+    \setCJKmainfont{Songti SC}[AutoFakeBold=2.5]%
     \setCJKsansfont{Heiti SC}%
     \setCJKmonofont{STFangsong}%
-    \setCJKfamilyfont{zhsong}{Songti SC}[BoldFont=Heiti SC]%
+    \setCJKfamilyfont{zhsong}{Songti SC}[AutoFakeBold=2.5]%
     \setCJKfamilyfont{zhhei}{Heiti SC}%
     \setCJKfamilyfont{zhkai}{Kaiti SC}%
     \setCJKfamilyfont{zhfs}{STFangsong}%
   }%
 }
 
+% --- Bundled: loads fonts from fonts/ dir by FILENAME (Overleaf/portable) ---
+% Place simsun.ttc, simhei.ttf, simkai.ttf, simfang.ttf in fonts/ directory.
+% This gives Word-identical output on ANY platform, including Overleaf.
+\DeclareOption{fontset=bundled}{%
+  \def\jnu@fontset@load{%
+    \setCJKmainfont{simsun.ttc}[AutoFakeBold=2.5,Path=fonts/]%
+    \setCJKsansfont{simhei.ttf}[Path=fonts/]%
+    \setCJKmonofont{simfang.ttf}[Path=fonts/]%
+    \setCJKfamilyfont{zhsong}{simsun.ttc}[AutoFakeBold=2.5,Path=fonts/]%
+    \setCJKfamilyfont{zhhei}{simhei.ttf}[Path=fonts/]%
+    \setCJKfamilyfont{zhkai}{simkai.ttf}[Path=fonts/]%
+    \setCJKfamilyfont{zhfs}{simfang.ttf}[Path=fonts/]%
+  }%
+}
+
+% --- Ubuntu/Debian: Noto CJK fonts ---
 \DeclareOption{fontset=ubuntu}{%
   \def\jnu@fontset@load{%
-    \setCJKmainfont{Noto Serif CJK SC}[BoldFont=Noto Sans CJK SC]%
+    \setCJKmainfont{Noto Serif CJK SC}[AutoFakeBold=2.5,BoldFont=Noto Sans CJK SC]%
     \setCJKsansfont{Noto Sans CJK SC}%
     \setCJKmonofont{Noto Sans CJK SC}%
-    \setCJKfamilyfont{zhsong}{Noto Serif CJK SC}[BoldFont=Noto Sans CJK SC]%
+    \setCJKfamilyfont{zhsong}{Noto Serif CJK SC}[AutoFakeBold=2.5]%
     \setCJKfamilyfont{zhhei}{Noto Sans CJK SC}%
     \setCJKfamilyfont{zhkai}{Noto Serif CJK SC}%
     \setCJKfamilyfont{zhfs}{Noto Serif CJK SC}%
   }%
 }
 
+% --- Source Han: cross-platform open source alternative ---
 \DeclareOption{fontset=sourcehan}{%
   \def\jnu@fontset@load{%
-    \setCJKmainfont{Source Han Serif SC}[BoldFont=Source Han Sans SC]%
+    \setCJKmainfont{Source Han Serif SC}[AutoFakeBold=2.5,BoldFont=Source Han Sans SC]%
     \setCJKsansfont{Source Han Sans SC}%
     \setCJKmonofont{Source Han Sans SC}%
-    \setCJKfamilyfont{zhsong}{Source Han Serif SC}[BoldFont=Source Han Sans SC]%
+    \setCJKfamilyfont{zhsong}{Source Han Serif SC}[AutoFakeBold=2.5]%
     \setCJKfamilyfont{zhhei}{Source Han Sans SC}%
     \setCJKfamilyfont{zhkai}{Source Han Serif SC}%
     \setCJKfamilyfont{zhfs}{Source Han Serif SC}%

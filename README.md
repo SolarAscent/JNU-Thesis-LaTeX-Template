@@ -104,7 +104,7 @@ jnuthesis.tex          ← Main file (edit your metadata here)
 | Option | Values | Default | Description |
 |--------|--------|---------|-------------|
 | `numbering` | `chinese`, `arabic` | `chinese` | Heading numbering: 一/(一)/1… or 1/1.1/1.1.1 |
-| `fontset` | `mac`, `windows`, `ubuntu`, `fandol`, `sourcehan` | `fandol` | CJK font configuration (auto-detected per OS) |
+| `fontset` | `fandol`, `windows`, `bundled`, `mac`, `ubuntu`, `sourcehan` | `fandol` | CJK font configuration (see [Font Guide](fonts/README.md)) |
 | `toc-depth` | `3`, `4` | `3` | Table of contents depth |
 | `draft` | — | — | Fast draft mode |
 
@@ -315,7 +315,7 @@ jnuthesis.tex          ← 主文件（在此填写元数据）
 | 选项 | 可选值 | 默认值 | 说明 |
 |------|--------|--------|------|
 | `numbering` | `chinese`, `arabic` | `chinese` | 章节编号方案：一/(一)/1… 或 1/1.1/1.1.1 |
-| `fontset` | `mac`, `windows`, `ubuntu`, `fandol`, `sourcehan` | `fandol` | 中文字体配置 |
+| `fontset` | `fandol`, `windows`, `bundled`, `mac`, `ubuntu`, `sourcehan` | `fandol` | 中文字体配置（详见[字体指南](fonts/README.md)） |
 | `toc-depth` | `3`, `4` | `3` | 目录深度 |
 | `draft` | — | — | 草稿模式（快速编译） |
 
