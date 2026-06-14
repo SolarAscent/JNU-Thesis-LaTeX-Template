@@ -31,6 +31,12 @@ Thumbs.db
 /jnuthesis.pdf
 build/
 .codex-analysis/
+.claude-analysis/
+
+# Working reference renders of the official Word files (regenerate as needed)
+/cover-word-render.pdf
+/thesis-word-render.pdf
+/_inspect-copy.dot
 
 # Python
 __pycache__/

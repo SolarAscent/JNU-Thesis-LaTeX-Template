@@ -1,195 +1,158 @@
-# Jinan University Undergraduate Thesis LaTeX Template
+# Jinan University Undergraduate Thesis — LaTeX Template
 
 <div align="center">
 
 [中文](README.md) | **English**
 
-[![XeLaTeX](https://img.shields.io/badge/compiler-XeLaTeX-126f9a)](#local-build)
-[![GB/T 7714](https://img.shields.io/badge/bibliography-GB%2FT%207714--2015-444)](#bibliography)
+[![Compile](https://github.com/SolarAscent/JNU-Thesis-LaTeX-Template/actions/workflows/compile.yml/badge.svg)](https://github.com/SolarAscent/JNU-Thesis-LaTeX-Template/actions/workflows/compile.yml)
+[![XeLaTeX](https://img.shields.io/badge/compiler-XeLaTeX-126f9a)](#build-environments)
+[![GB/T 7714](https://img.shields.io/badge/bibliography-GB%2FT%207714--2015-444)](#references)
 [![Example PDF](https://img.shields.io/badge/example-PDF-0f766e)](examples/jnuthesis-example.pdf)
 [![License](https://img.shields.io/badge/license-GPL--3.0-blue)](LICENSE)
 
-A LaTeX template for Jinan University undergraduate theses, based on the 2026 official Word templates.
+**A page-for-page LaTeX reproduction of the official Word template** — cover, integrity statement, Chinese/English abstracts, table of contents, body, tables, figures, equations, references, appendix and acknowledgements all match the official originals.
 
 </div>
 
 ---
 
-## Start Here
+> [!IMPORTANT]
+> **Verify before you submit.** This is an unofficial, community-maintained LaTeX port, calibrated page-for-page against the **2026‑04‑13** official Word files (`暨南大学本科毕业论文模板20260413.dot` and `本科毕业论文封面.docx`). However:
+> 1. Your school/college may **update** the official template or impose extra rules at any time;
+> 2. Chinese fonts **render slightly differently** across operating systems (see [Fonts](#fonts));
+> 3. Some departments have **their own rules** for headers, page numbers, references, etc.
+>
+> Before final submission, compare the compiled PDF page-by-page against **the latest official template your department issues**, and confirm it conforms. The authors are not responsible for any consequences of formatting mismatches.
 
-This repository is designed to take care of the fussy parts of thesis formatting: cover layout, table of contents, headers and footers, Chinese fonts, captions, and GB/T 7714 references.
+---
 
-The official Word files and a compiled LaTeX PDF example are included. Open the [PDF example](examples/jnuthesis-example.pdf) first if you want a quick sense of the current output.
+## What this template does for you
 
-| I want to | Open |
-| --- | --- |
-| Preview the compiled result | [examples/jnuthesis-example.pdf](examples/jnuthesis-example.pdf) |
-| Check the official Word templates | [official/](official/) |
-| Start writing my thesis | [jnuthesis.tex](jnuthesis.tex) |
-| Configure Chinese fonts | [fonts/README.md](fonts/README.md) |
+Cover pages, the table of contents, headers/footers, Chinese fonts and reference formatting are the most time-consuming "typesetting chores" of a thesis. This repo gets them all right so you can focus on the content:
 
-## Repository Contents
+- ✅ **Matches the official Word file page-for-page** — the cover seal/calligraphy images, the KaiTi `诚信声明`, the 18pt abstract titles, dotted TOC leaders, `图/表 X‑Y` captions and `（式 X‑Y）` equation tags all reproduce the originals.
+- ✅ **Faithful fonts** — Song body, bold-Song headings, Hei cover title, KaiTi integrity statement, Times New Roman for Latin.
+- ✅ **Faithful line spacing** — body text sits on the official 32.5pt document grid (Word's "1.5 lines + snap to grid").
+- ✅ **GB/T 7714‑2015** references via `biblatex` + `biber`.
+- ✅ **One-command build**, with GitHub Actions CI.
 
-```text
-official/
-├── 暨南大学本科毕业论文模板20260413.dot
-└── 本科毕业论文封面.docx
+Open the [example PDF](examples/jnuthesis-example.pdf) to see the result.
 
-examples/
-└── jnuthesis-example.pdf
-
-jnuthesis.cls       Template class: pages, cover, headings, TOC, captions, bibliography
-jnuthesis.tex       Example main file
-refs.bib            Example bibliography database
-figs/               Cover logo and university name images
-fonts/README.md     Font setup guide
-latexmkrc           latexmk configuration
-```
-
-## Three-Step Start
-
-### 1. Clone
+## Quick start
 
 ```bash
 git clone https://github.com/SolarAscent/JNU-Thesis-LaTeX-Template.git
 cd JNU-Thesis-LaTeX-Template
 ```
 
-### 2. Fill in metadata
-
-Edit the metadata at the top of `jnuthesis.tex`:
+Edit the metadata in [`jnuthesis.tex`](jnuthesis.tex):
 
 ```latex
-\biaoti{Chinese thesis title}
-\entitle{English Thesis Title}
-\xueyuan{College}
-\xuexi{Department}
-\zhuanye{Major}
-\xingming{Name}
-\xuehao{Student ID}
-\daoshi{Advisor}
-% \thesisdate{2026}{6}{4}
+\biaoti{你的中文论文题目}        % also used for the abstract title and running header
+\entitle{Your English Thesis Title}
+\xueyuan{XX学院}\xuexi{XX学系}\zhuanye{XX专业}
+\xingming{姓名}\xuehao{学号}\daoshi{指导教师}
+\thesisdate{2026}{6}{14}
 ```
 
-The cover date is blank by default, matching the official placeholder style. Uncomment `\thesisdate` if you want the date to appear.
-
-The example source uses `\makeblankcover` by default, so the generated PDF opens with the official blank cover form. For a filled thesis cover, change `\makeblankcover` in [jnuthesis.tex](jnuthesis.tex) back to `\makecover`; the metadata above will then be printed on the cover lines.
-
-### 3. Build PDF
+Switch the cover command from the placeholder `\makeblankcover` to `\makecover`, then build:
 
 ```bash
 latexmk -xelatex jnuthesis.tex
 ```
 
-The output will be `jnuthesis.pdf`.
+You get `jnuthesis.pdf` (15 pages: cover + 14 body pages).
 
-## Build Environments
+## Build environments
 
-### TeXPage
+> Use **XeLaTeX** (required for Chinese), never pdfLaTeX.
 
-1. Create a project on TeXPage and upload this repository as a ZIP.
-2. Set the compiler to `XeLaTeX`.
-3. For closer official Word font rendering, upload the Windows font files into `fonts/` and use:
+| Environment | How |
+| --- | --- |
+| **Local** | Install MacTeX / TeX Live / MiKTeX, run `latexmk -xelatex jnuthesis.tex` |
+| **Overleaf** | Upload the project, set Compiler to `XeLaTeX`; prefer `\documentclass[fontset=fandol]{jnuthesis}` |
+| **TeXPage** | Upload the ZIP, choose `XeLaTeX` |
+| **GitHub Actions** | Builds with XeLaTeX and uploads the PDF on every push (see [Actions](../../actions)) |
 
-```latex
-\documentclass[numbering=arabic,fontset=bundled]{jnuthesis}
-```
+## Fonts
 
-### Overleaf
+The look of a Chinese thesis is mostly down to the fonts. The template adapts via the `fontset` option, **defaulting to `fontset=auto`**:
 
-Upload the full project and set Compiler to `XeLaTeX`. If you use `fontset=bundled`, also upload `simsun.ttc`, `simhei.ttf`, `simkai.ttf`, and `simfang.ttf` into `fonts/`.
-
-### Local Build
-
-Install MacTeX, TeX Live, or MiKTeX, then run:
-
-```bash
-latexmk -xelatex jnuthesis.tex
-```
-
-Manual build order:
-
-```bash
-xelatex jnuthesis
-biber jnuthesis
-xelatex jnuthesis
-xelatex jnuthesis
-```
-
-## Font Choices
-
-For a Chinese thesis template, the font setup has a large impact on the final appearance. The class provides several font modes:
-
-| Option | Best for | Notes |
+| Option | Platform | Fonts |
 | --- | --- | --- |
-| `fontset=windows` | Windows final drafts | Uses system SimSun/SimHei |
-| `fontset=bundled` | TeXPage, Overleaf, cross-platform final drafts | Loads Zhongyi fonts from `fonts/`; recommended for final checks |
-| `fontset=mac` | macOS local drafts | Uses Songti SC/Heiti SC |
-| `fontset=auto` | Default drafts | Chooses available fonts and prioritizes successful builds |
-| `fontset=fandol` | Zero-config drafts | Uses TeX Live fonts; visually different from SimSun/SimHei |
+| `auto` (default) | any | Auto-detect: macOS → system Song/Hei/Kai, Windows → SimSun/SimHei/KaiTi, Linux → Noto/Fandol |
+| `mac` | macOS | Songti SC / Heiti SC / Kaiti SC / STFangsong |
+| `windows` | Windows | SimSun / SimHei / KaiTi_GB2312 / FangSong (identical to the official Word) |
+| `bundled` | Overleaf / cross-platform final | loads fonts from `fonts/` (supply the files yourself) |
+| `fandol` | zero-config / CI | TeX Live built-in; looks slightly different from SimSun |
 
-If your department checks fonts strictly, use `fontset=windows` or `fontset=bundled`. See [fonts/README.md](fonts/README.md) for font file placement.
+> **Why system fonts on macOS?** Word itself substitutes SimSun/SimHei/KaiTi with Songti/Heiti/Kaiti when it opens the official file on a Mac — so compiling with those fonts looks **exactly like what you see in Word**. Switch to `fontset=windows` for the "standard" Windows glyphs in a final build.
 
-## Writing Structure
+## Repository layout
 
-The example main file already contains the usual thesis structure:
+```text
+jnuthesis.cls          The class: page geometry, fonts, cover, headings, TOC, captions, bibliography
+jnuthesis.tex          Example main file — fill in metadata and write here
+refs.bib               Example GB/T 7714‑2015 bibliography
+figs/                  Cover seal and calligraphy images (from the official cover .docx)
+fonts/                 Drop bundled fonts here (see fonts/README.md)
+examples/              Example compiled PDF
+official/              Official Word originals (.dot body + .docx cover)
+latexmkrc              latexmk configuration
+.github/workflows/     GitHub Actions auto-build
+```
+
+## Writing guide
 
 ```latex
-\makecover
-\makestatement
+\makecover                       % cover (\makeblankcover for a blank preview)
+\makestatement                   % integrity statement
 
 \begin{zhabstract}
-Chinese abstract text.
-\zhaiyao{Keyword 1; Keyword 2; Keyword 3}
+Chinese abstract...
+\zhkeywords{关键词1；关键词2；关键词3}
 \end{zhabstract}
 
 \begin{enabstract}
-English abstract text.
+English abstract...
 \enkeywords{Keyword1; Keyword2; Keyword3}
 \end{enabstract}
 
 \tableofcontents
+\jnumainmatter                   % body starts here with arabic page numbers
 
-\chapter{Introduction}
+\chapter{绪论}
+\section{文献综述}
 ...
 
-\printbibliography[title={参考文献}]
+\jnucenterchapter{参考文献}       % or the automatic bibliography below
+\jnuleftchapter{附录}
+\jnucenterchapter{致谢}
 ```
 
-## Bibliography
+- **Headings**: `\chapter` (level 1, 15pt bold Song), `\section`/`\subsection` (14pt bold Song), numbered `1`, `1.1`, `1.1.1`.
+- **Figures/tables**: `\caption{}` auto-numbers `图 X‑Y` / `表 X‑Y` (10.5pt Song, centered).
+- **Equations**: the `equation` environment auto-tags `（式 X‑Y）`, right-aligned.
+- **Special chapters**: `参考文献` & `致谢` centered titles, `附录` left-aligned (matching the official template).
 
-The template uses `biblatex` with `biblatex-gb7714-2015`. Add entries to `refs.bib`, then cite them in the document:
+## References
 
-```latex
-\supercite{ref-example-1}
-\upcite{ref-example-2}
-```
+Uses `biblatex` + `biblatex-gb7714-2015` (GB/T 7714‑2015 numeric scheme). Put entries in [`refs.bib`](refs.bib) and cite with `\supercite{key}` / `\upcite{key}`. When writing for real, remove the placeholder guidance text and uncomment `\printbibliography[heading=jnubib]`. `latexmk -xelatex` runs `biber` automatically.
 
-`latexmk -xelatex` will handle repeated compilation and `biber`.
+## FAQ
 
-## Word Export
-
-PDF is the primary output of this template. If you need a Word file, Pandoc can produce an approximate `.docx`:
-
-```bash
-pandoc jnuthesis.tex -o thesis.docx \
-  --pdf-engine=xelatex \
-  --bibliography=refs.bib \
-  --citeproc
-```
-
-Pandoc cannot fully preserve complex LaTeX macros, cover layout, or bibliography formatting. If your department requires Word submission, use the PDF as the layout reference and review the generated `.docx` page by page.
-
-## Troubleshooting
-
-| Problem | Suggestion |
+| Problem | Fix |
 | --- | --- |
-| Chinese text is missing | Use `XeLaTeX`, not `pdfLaTeX` |
-| Fonts do not look like Word | Use `fontset=windows` or `fontset=bundled` |
-| Bibliography is missing | Use `latexmk -xelatex`, or run `biber jnuthesis` manually |
-| TeXPage cannot find fonts | Upload font files into `fonts/` and use `fontset=bundled` |
-| Word export drifts | Pandoc is approximate; review the output manually |
+| Chinese missing / "missing character" | Use `XeLaTeX`, not pdfLaTeX |
+| Fonts don't match Word | macOS: keep `auto`; Windows final: `fontset=windows` |
+| References don't appear | Use `latexmk -xelatex`, or run `biber jnuthesis` then compile twice |
+| Missing fonts on Overleaf | Use `fontset=fandol`, or upload fonts to `fonts/` and use `fontset=bundled` |
+| Cover fields blank | Change `\makeblankcover` to `\makecover` and fill the metadata |
 
-## Credits
+## Acknowledgements
 
-Thanks to Jinan University's 2026 official Word thesis templates, the original `jnuthesis`, [Latiyas/JNUThesis](https://github.com/Latiyas/JNUThesis), and the legacy [SolarAscent/JNUThesisTemplate](https://github.com/SolarAscent/JNUThesisTemplate). This project borrows their engineering lessons for Chinese fonts, table of contents, captions, lists, and build configuration, while using the 2026 official Word templates as the formatting baseline.
+Thanks to Jinan University's official Word thesis template, and to prior work — [Latiyas/JNUThesis](https://github.com/Latiyas/JNUThesis) and the legacy `jnuthesis` — for experience with Chinese fonts, TOC, captions, lists and build configuration. This project is a fresh implementation calibrated against the latest official Word template.
+
+## License
+
+Released under [GPL‑3.0](LICENSE). The Jinan University seal, name and related marks are property of Jinan University and are intended solely for JNU students writing their theses.
